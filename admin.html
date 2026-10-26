@@ -1,71 +1,216 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>joe · owner</title>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>joe · owner</title>
 <style>
-body{font-family:system-ui,sans-serif;background:#efe9d6;color:#2b2820;margin:0;padding:24px;max-width:1100px}
-h1{font-family:Georgia,serif;font-weight:500}
-h2{font-family:Georgia,serif;font-weight:500;margin-top:28px}
-.card{background:#fbf9f1;border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 2px 10px rgba(0,0,0,.08)}
-.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-input,textarea{font:inherit;padding:9px 12px;border-radius:10px;border:1px solid #b7af98;background:#fff;width:100%}
-button{font:inherit;padding:9px 14px;border-radius:10px;border:0;background:#2b2820;color:#f4efdf;cursor:pointer}
-img{width:140px;border-radius:10px;border:1px solid #b7af98}
-.tag{padding:3px 10px;border-radius:999px;background:#ddd5c1;font-size:13px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.muted{color:#7a7266;font-size:14px}
-.mono{font-family:ui-monospace,monospace;font-size:13px;word-break:break-all}
-@media(max-width:700px){.grid{grid-template-columns:1fr}}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,"Segoe UI",Tahoma,sans-serif;background:#efe9d6;color:#2b2820;font-size:15px}
+header{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:14px 20px;background:#2b2820;color:#f4efdf}
+header h1{margin:0;font-size:22px;font-family:Georgia,serif;font-weight:500}
+header input{padding:8px 10px;border-radius:8px;border:0;min-width:220px}
+button{font:inherit;padding:8px 14px;border-radius:9px;border:0;background:#2b2820;color:#f4efdf;cursor:pointer}
+button.ghost{background:#ddd5c1;color:#2b2820}
+nav{display:flex;gap:6px;padding:10px 20px;background:#e4dcc6;flex-wrap:wrap}
+nav button{background:transparent;color:#2b2820}
+nav button.on{background:#2b2820;color:#f4efdf}
+main{padding:18px 20px;max-width:1200px}
+section{display:none}
+section.on{display:block}
+.card{background:#fbf9f1;border-radius:14px;padding:14px;margin:10px 0;box-shadow:0 2px 10px rgba(0,0,0,.07)}
+.split{display:grid;grid-template-columns:320px 1fr;gap:16px}
+@media(max-width:800px){.split{grid-template-columns:1fr}}
+.item{display:block;width:100%;text-align:start;background:#fbf9f1;color:#2b2820;margin:6px 0;border:1px solid #d6cdb4}
+.item.on{border-color:#2b2820}
+.tag{display:inline-block;padding:2px 9px;border-radius:999px;background:#ddd5c1;font-size:12px;margin-inline-end:4px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.msgs{display:flex;flex-direction:column;gap:8px;max-height:50vh;overflow:auto;padding:6px}
+.msg{max-width:78%;padding:9px 12px;border-radius:14px;background:#fff;white-space:pre-wrap;align-self:flex-start}
+.msg.mine{align-self:flex-end;background:#2b2820;color:#f4efdf}
+.msg img{display:block;max-width:220px;border-radius:8px;margin-top:6px}
+.msg small{display:block;opacity:.6;font-size:11px;margin-top:4px}
+textarea,input[type=number],input[type=text],input[type=password]{font:inherit;padding:8px 10px;border-radius:9px;border:1px solid #b7af98;background:#fff;width:100%}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+label{display:grid;gap:4px;font-size:13px;color:#5e574b}
+.muted{color:#7a7266;font-size:13px}
+.mono{font-family:ui-monospace,monospace;font-size:12px;word-break:break-all}
+img.proof{width:160px;border-radius:10px;border:1px solid #b7af98}
+#msg{color:#f4efdf;font-size:14px}
 </style></head><body>
-<h1>joe · owner</h1>
-<div class="row"><input id="key" type="password" placeholder="Admin key" style="max-width:300px"><button id="open">Open</button><span id="msg" class="muted"></span></div>
-<h2>Orders and payments</h2>
-<div id="orders"><p class="muted">Enter the admin key to see orders.</p></div>
-<h2>Codes and news</h2>
-<div class="card"><div class="grid">
-<input id="te" placeholder="Title (English)"><input id="ta" placeholder="العنوان (عربي)">
-<textarea id="be" rows="3" placeholder="Body (English)"></textarea><textarea id="ba" rows="3" placeholder="المحتوى (عربي)"></textarea>
-</div><p><button id="addNews">Publish news</button> <span id="nmsg" class="muted"></span></p></div>
-<div id="news"></div>
-<p class="muted">Support tickets are not stored on the server yet, so they only appear in the customer's browser.</p>
+<header><h1>joe · owner</h1><input id="key" type="password" placeholder="كلمة سر الأدمن"><button id="open">دخول</button><span id="msg"></span></header>
+<nav>
+<button data-tab="tickets" class="on">التكتات</button>
+<button data-tab="orders">الطلبات</button>
+<button data-tab="prices">الأسعار والأكواد</button>
+<button data-tab="news">الأخبار</button>
+</nav>
+<main>
+<section id="tab-tickets" class="on">
+  <div class="split">
+    <div>
+      <div class="row" style="margin-bottom:8px"><button class="ghost" id="filterOpen">المفتوحة</button><button class="ghost" id="filterAll">الكل</button></div><input id="tsearch" type="text" placeholder="بحث بالإيميل أو الرقم" style="margin-bottom:8px">
+      <div id="tlist"></div>
+    </div>
+    <div id="tview"><p class="muted">اختار تكت من القايمة.</p></div>
+  </div>
+</section>
+<section id="tab-orders"><input id="osearch" type="text" placeholder="بحث بالإيميل أو رقم الطلب" style="margin-bottom:10px"><div id="orders"></div></section>
+<section id="tab-prices">
+  <div class="card"><h3>الباقات (بالدولار)</h3><div class="grid2" id="fBase"></div></div>
+  <div class="card"><h3>الرومات والرولات والبوتات (بالدولار للوحدة)</h3><div class="grid2" id="fUnits"></div></div>
+  <div class="card"><h3>أسعار العملات (بالدولار لكل عملة)</h3><div class="grid2" id="fRates"></div></div>
+  <div class="card"><h3>كود الخصم</h3><div class="grid2" id="fCode"></div></div>
+  <p class="row"><button id="savePrices">حفظ الأسعار</button><span id="pmsg" class="muted"></span></p>
+</section>
+<section id="tab-news">
+  <div class="card"><div class="grid2">
+    <label>Title (English)<input id="te" type="text"></label>
+    <label>العنوان (عربي)<input id="ta" type="text"></label>
+    <label>Body (English)<textarea id="be" rows="3"></textarea></label>
+    <label>المحتوى (عربي)<textarea id="ba" rows="3"></textarea></label>
+  </div><p class="row"><button id="addNews">نشر الخبر</button><span id="nmsg" class="muted"></span></p></div>
+  <div id="news"></div>
+</section>
+</main>
 <script>
-const $=s=>document.querySelector(s);
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[c]);
-let KEY=sessionStorage.getItem("joe_admin_key")||"";
+let KEY=sessionStorage.getItem("joe_admin_key")||"", CUR=null, FILTER="open", TICKETS=[], ORDERS=[], PENDING_IMGS=[];
+document.addEventListener("change",async e=>{
+  if(e.target.id!=="replyImg")return;
+  const files=[...e.target.files].slice(0,3);
+  PENDING_IMGS=await Promise.all(files.map(f=>new Promise(res=>{const r=new FileReader();r.onload=()=>res({name:f.name,data:r.result});r.readAsDataURL(f)})));
+  say(PENDING_IMGS.length+" صورة جاهزة للإرسال");
+});
+$("#tsearch").oninput=()=>loadTickets();
+$("#osearch").oninput=()=>renderOrders();
 $("#key").value=KEY;
+const say=text=>{$("#msg").textContent=text};
 async function call(path,opt){
   opt=opt||{};
   const r=await fetch(path,{method:opt.method||"GET",headers:{"Content-Type":"application/json","x-admin-key":KEY},body:opt.body});
   const j=await r.json().catch(()=>({}));
-  if(!r.ok)throw new Error(j.error||("Error "+r.status));
+  if(!r.ok) throw new Error(j.error||("Error "+r.status));
   return j;
 }
-async function loadOrders(){
-  try{
-    const list=await call("/api/admin/orders");
-    $("#orders").innerHTML=list.length?list.map(o=>`<div class="card">
-      <div class="row"><b>${esc(o.ref)}</b><span class="tag">${esc(o.status)}</span><span>${esc(o.email)}</span><span>${esc(o.pkg)} · $${Number(o.usd).toFixed(2)}</span></div>
-      <p>${esc(o.pay.amount)} ${esc(o.pay.coin)} · ${esc(o.pay.net)}</p>
-      <p class="mono">${esc(o.pay.addr)}</p>
-      ${o.proof?`<div class="row"><img src="${esc(o.proof.data)}" alt=""><span>${esc(o.proof.name)}</span></div>`:'<p class="muted">No transfer screenshot yet.</p>'}
-      ${o.status==="paid"?'<p class="muted">Paid and invoiced.</p>':`<p><button data-confirm="${esc(o.id)}">Confirm payment</button></p>`}
-    </div>`).join(""):'<p class="muted">No orders yet.</p>';
-    $("#msg").textContent="Updated "+new Date().toLocaleTimeString();
-  }catch(e){$("#msg").textContent=e.message}
+function showTab(tab){
+  if(!KEY) return say("ادخل كلمة سر الأدمن الأول");
+  if(tab==="tickets") loadTickets();
+  if(tab==="orders") loadOrders();
+  if(tab==="prices") loadPrices();
+  if(tab==="news") loadNews();
 }
-async function loadNews(){
-  const list=await call("/api/news").catch(()=>[]);
-  $("#news").innerHTML=list.map(n=>`<div class="card"><span class="tag">${esc(n.date)}</span><h3>${esc(n.title.en)} · ${esc(n.title.ar)}</h3><p>${esc(n.body.en)}</p><p>${esc(n.body.ar)}</p></div>`).join("");
+$$("nav button").forEach(b=>b.onclick=()=>{
+  $$("nav button").forEach(x=>x.classList.toggle("on",x===b));
+  $$("section").forEach(s=>s.classList.toggle("on",s.id==="tab-"+b.dataset.tab));
+  showTab(b.dataset.tab);
+});
+$("#open").onclick=()=>{KEY=$("#key").value.trim();sessionStorage.setItem("joe_admin_key",KEY);say("");showTab("tickets")};
+$("#filterOpen").onclick=()=>{FILTER="open";loadTickets()};
+$("#filterAll").onclick=()=>{FILTER="all";loadTickets()};
+$("#tlist").onclick=e=>{const b=e.target.closest("[data-id]");if(b)openTicket(b.dataset.id)};
+
+// ---------- tickets
+async function loadTickets(){
+  try{TICKETS=await call("/api/admin/tickets");}catch(e){return say(e.message)}
+  const q=($("#tsearch").value||"").trim().toLowerCase();
+  const list=TICKETS.filter(t=>(FILTER==="all"||t.status==="open")&&(!q||(t.email+" "+(t.reason||"")+" "+t.id).toLowerCase().includes(q)));
+  $("#tlist").innerHTML=list.map(t=>`<button class="item ${CUR===t.id?"on":""}" data-id="${esc(t.id)}"><b>${t.type==="purchase"?"شراء":"دعم"}</b> · ${esc(t.reason||"")}<br><span class="muted">${esc(t.email)}</span> <span class="tag">${t.status==="open"?"مفتوح":"مقفول"}</span></button>`).join("")||'<p class="muted">مفيش تكتات.</p>';
+}
+function openTicket(id){
+  CUR=id;loadTickets();loadTicket();
+  clearInterval(window.POLL);window.POLL=setInterval(()=>{if(CUR===id)loadTicket()},8000);
+}
+async function loadTicket(){
+  if(!CUR) return;
+  let t;
+  try{
+    t=await call("/api/admin/tickets?id="+CUR);
+    ORDERS=await call("/api/admin/orders").catch(()=>ORDERS);
+  }catch(e){return say(e.message)}
+  const draft=$("#reply")?$("#reply").value:"";
+  const order=t.type==="purchase"?ORDERS.find(o=>o.id===t.order_id):null;
+  const open=t.status==="open";
+  const orderBox=order?`<div class="card"><div class="row"><b>${esc(order.ref)}</b><span class="tag">${esc(order.status)}</span><span>$${Number(order.usd).toFixed(2)}</span><span>${esc(order.pay.amount)} ${esc(order.pay.coin)} · ${esc(order.pay.net)}</span></div>
+    <p class="mono">${esc(order.pay.addr)}</p>${order.proof?`<img class="proof" src="${esc(order.proof.data)}" alt="">`:'<p class="muted">لا توجد صورة تحويل بعد.</p>'}
+    ${order.status==="paid"?'<p class="muted">تم تأكيد الدفع ✓</p>':`<button data-confirm="${esc(order.id)}">تأكيد الدفع</button>`}</div>`:"";
+  $("#tview").innerHTML=`<div class="card"><div class="row">
+      <b>${t.type==="purchase"?"تكت شراء":"تكت دعم"}</b><span class="tag">${esc(t.email)}</span><span class="tag">${open?"مفتوح":"مقفول"}</span>
+      <button class="ghost" data-toggle="${open?"closed":"open"}">${open?"قفل التكت":"فتح التكت"}</button></div></div>`+orderBox+
+    `<div class="card"><div class="msgs" id="mlist">${t.messages.map(m=>`<div class="msg ${m.sender==="joe"?"mine":""}">${esc(m.text||"")}${(m.files||[]).map(f=>`<img src="${esc(f.data)}" alt="">`).join("")}<small>${m.sender==="joe"?"joe":"العميل"} · ${new Date(m.created_at).toLocaleString()}</small></div>`).join("")||'<p class="muted">مفيش رسايل لسه.</p>'}</div>
+     <div style="margin-top:10px"><textarea id="reply" rows="3" placeholder="اكتب الرد للعميل">${esc(draft)}</textarea>
+     <p class="row"><input type="file" id="replyImg" accept="image/*" multiple><button id="sendReply">إرسال الرد</button></p></div></div>`;
+  $("#mlist").scrollTop=$("#mlist").scrollHeight;
 }
 document.addEventListener("click",async e=>{
-  const id=e.target.dataset.confirm;
-  if(!id)return;
-  try{await call("/api/admin/orders/"+id+"/confirm",{method:"POST",body:"{}"});loadOrders()}catch(err){$("#msg").textContent=err.message}
+  const b=e.target.closest("button");if(!b)return;
+  try{
+    if(b.dataset.toggle){
+      await call(`/api/admin/tickets?id=${CUR}&action=status`,{method:"POST",body:JSON.stringify({status:b.dataset.toggle})});
+      say("تم تحديث التكت");loadTicket();loadTickets();
+    }else if(b.id==="sendReply"){
+      const v=$("#reply").value.trim();if(!v&&!PENDING_IMGS.length)return;
+      await call(`/api/admin/tickets?id=${CUR}&action=reply`,{method:"POST",body:JSON.stringify({text:v,files:PENDING_IMGS})});
+      $("#reply").value="";PENDING_IMGS=[];say("اتبعت الرد");loadTicket();
+    }else if(b.dataset.status){
+      const word=b.dataset.status==="refunded"?"استرجاع المبلغ":"إلغاء الطلب";
+      if(!window.confirm(word+"؟ ده بيغيّر حالة الطلب بس، والفلوس لازم ترجعها بإيدك.")) return;
+      await call(`/api/admin/orders?id=${b.dataset.oid}&action=status`,{method:"POST",body:JSON.stringify({status:b.dataset.status})});
+      say("اتحدّث الطلب");loadOrders();
+    }else if(b.dataset.confirm){
+      await call(`/api/admin/orders/${b.dataset.confirm}/confirm`,{method:"POST",body:"{}"});
+      say("اتأكد الطلب والفاتورة اتبعتت");loadTicket();loadOrders();
+    }
+  }catch(err){say(err.message)}
 });
-$("#open").onclick=()=>{KEY=$("#key").value.trim();sessionStorage.setItem("joe_admin_key",KEY);loadOrders()};
+
+// ---------- orders
+async function loadOrders(){
+  try{ORDERS=await call("/api/admin/orders");}catch(e){return say(e.message)}
+  renderOrders();
+}
+function renderOrders(){
+  const q=($("#osearch").value||"").trim().toLowerCase();
+  const list=ORDERS.filter(o=>!q||(o.email+" "+o.ref+" "+o.status).toLowerCase().includes(q));
+  $("#orders").innerHTML=list.map(o=>`<div class="card"><div class="row"><b>${esc(o.ref)}</b><span class="tag">${esc(o.status)}</span><span>${esc(o.email)}</span><span>${esc(o.pkg)} · $${Number(o.usd).toFixed(2)}</span></div>
+    <p>${esc(o.pay.amount)} ${esc(o.pay.coin)} · ${esc(o.pay.net)}</p><p class="mono">${esc(o.pay.addr)}</p>
+    ${o.proof?`<img class="proof" src="${esc(o.proof.data)}" alt="">`:'<p class="muted">لا توجد صورة تحويل.</p>'}
+    ${o.status==="paid"?'<p class="muted">تم التأكيد ✓</p>':`<button data-confirm="${esc(o.id)}">تأكيد الدفع</button>`}
+    ${o.status==="paid"?`<button class="ghost" data-oid="${esc(o.id)}" data-status="refunded">استرجاع</button>`:(o.status==="cancelled"||o.status==="refunded"?"":`<button class="ghost" data-oid="${esc(o.id)}" data-status="cancelled">إلغاء الطلب</button>`)}
+    </div>`).join("")||'<p class="muted">مفيش طلبات.</p>';
+}
+
+// ---------- prices and codes
+const BASE_KEYS=[["community","سيرفر كومينيتي"],["shop","باقة الشوب"],["store","باقة الاستور"],["upgrade","تطوير سيرفر"],["other","سيرفرات أخرى"]];
+const UNIT_KEYS=[["rooms","الروم"],["roles","الرول"],["bots","البوت"]];
+const RATE_KEYS=[["BTC","BTC"],["ETH","ETH"],["USDT","USDT (BEP20)"],["SOL","SOL"],["LTC","LTC"]];
+async function loadPrices(){
+  let P;
+  try{P=await fetch("/api/settings").then(r=>r.json());}catch(e){return say("تعذر تحميل الأسعار")}
+  const field=(name,label,val,step)=>`<label>${label}<input type="number" step="${step}" min="0" data-g="${name}" value="${val}"></label>`;
+  $("#fBase").innerHTML=BASE_KEYS.map(([k,l])=>field("base."+k,l,P.base[k],"0.01")).join("");
+  $("#fUnits").innerHTML=UNIT_KEYS.map(([k,l])=>field("units."+k,l,P.units[k],"0.01")).join("");
+  $("#fRates").innerHTML=RATE_KEYS.map(([k,l])=>field("rates."+k,l,P.rates[k],"any")).join("");
+  $("#fCode").innerHTML=`<label>الكود<input type="text" data-g="code.word" value="${esc(P.code.word)}"></label>`+field("code.percent","نسبة الخصم %",P.code.percent,"1");
+}
+$("#savePrices").onclick=async()=>{
+  const body={base:{},units:{},rates:{},code:{}};
+  $$("[data-g]").forEach(i=>{const [g,k]=i.dataset.g.split(".");body[g][k]=i.type==="number"?Number(i.value):i.value});
+  try{
+    await call("/api/admin/settings",{method:"POST",body:JSON.stringify(body)});
+    $("#pmsg").textContent="تم الحفظ ✓";loadPrices();
+  }catch(e){$("#pmsg").textContent=e.message}
+};
+
+// ---------- news
+async function loadNews(){
+  const list=await fetch("/api/news").then(r=>r.json()).catch(()=>[]);
+  $("#news").innerHTML=list.map(n=>`<div class="card"><span class="tag">${esc(n.date)}</span><h3>${esc(n.title.en)} · ${esc(n.title.ar)}</h3><p>${esc(n.body.en)}</p><p>${esc(n.body.ar)}</p></div>`).join("");
+}
 $("#addNews").onclick=async()=>{
   try{
     await call("/api/admin/news",{method:"POST",body:JSON.stringify({title_en:$("#te").value,title_ar:$("#ta").value,body_en:$("#be").value,body_ar:$("#ba").value})});
-    $("#nmsg").textContent="Published.";["te","ta","be","ba"].forEach(i=>$("#"+i).value="");loadNews();
+    $("#nmsg").textContent="اتنشر ✓";["te","ta","be","ba"].forEach(i=>$("#"+i).value="");loadNews();
   }catch(e){$("#nmsg").textContent=e.message}
 };
-loadNews();if(KEY)loadOrders();setInterval(()=>{if(KEY)loadOrders()},30000);
+
+if(KEY) loadTickets();
+setInterval(()=>{if(KEY&&$("#tab-tickets").classList.contains("on"))loadTickets()},20000);
 </script></body></html>
