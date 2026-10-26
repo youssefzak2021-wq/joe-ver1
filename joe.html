@@ -454,12 +454,32 @@ function applyCode(){
   else{S.disc=((S.pricing&&S.pricing.code.percent)||10)/100;msg.textContent=t("codeOk")}
   paintCfg();
 }
+// photos are shrunk on the phone first, so a message with a picture goes out fast
+function shrinkImage(file,max=1280){
+  return new Promise(resolve=>{
+    const fr=new FileReader();
+    fr.onload=()=>{
+      const img=new Image();
+      img.onload=()=>{
+        const s=Math.min(1,max/Math.max(img.width,img.height));
+        const c=document.createElement("canvas");
+        c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);
+        const ctx=c.getContext("2d");ctx.fillStyle="#fff";ctx.fillRect(0,0,c.width,c.height);
+        ctx.drawImage(img,0,0,c.width,c.height);
+        resolve(c.toDataURL("image/jpeg",0.82));
+      };
+      img.onerror=()=>resolve(fr.result);
+      img.src=fr.result;
+    };
+    fr.readAsDataURL(file);
+  });
+}
 function stageFiles(list,img){
   [...list].forEach(f=>{
     if(f.size>8e6){toast(t("tooBig"));return}
     const it={name:f.name,img:img||f.type.startsWith("image/"),url:""};
     S.staged.push(it);
-    if(it.img){const r=new FileReader();r.onload=()=>{it.url=r.result;paintPanel()};r.readAsDataURL(f)}
+    if(it.img){shrinkImage(f).then(u=>{it.url=u;paintPanel()})}
   });
   paintPanel();
 }
@@ -567,7 +587,6 @@ function sendMe(tk,text,files){
   tk.msgs.push({f:"me",text,files});notify(t("msgSent"));
   if(LIVE&&tk.tid){
     api("/tickets?id="+tk.tid+"&action=message",{token:tk.ttoken,text,files:(files||[]).filter(f=>f.url).map(f=>({name:f.name,data:f.url}))}).catch(e=>toast(e.message));
-    return;
   }
   seq(tk,[{m:{f:"joe",text:t("chatAck")},d:1200}]);
 }
@@ -695,10 +714,9 @@ async function switchCoinLive(tk,coin){
 }
 function stageProof(f){
   if(!f||!f.type.startsWith("image/"))return;
-  if(f.size>2.5e6){toast(t("tooBig"));return}
-  const tk=S.act,r=new FileReader();
-  r.onload=()=>{tk.proof={name:f.name,url:r.result,img:true};refresh()};
-  r.readAsDataURL(f);
+  if(f.size>12e6){toast(t("tooBig"));return}
+  const tk=S.act;
+  shrinkImage(f,1600).then(u=>{tk.proof={name:f.name,url:u,img:true};refresh()});
 }
 async function sendProofLive(tk){
   try{
@@ -744,7 +762,7 @@ async function loadPricing(){
 // the page checks the server for the owner's replies and close/reopen changes
 function startPoll(tk){
   if(!LIVE||!tk.tid||tk.poll)return;
-  tk.poll=setInterval(()=>pollTicket(tk),8000);
+  tk.poll=setInterval(()=>pollTicket(tk),3000);
   pollTicket(tk);
 }
 async function pollTicket(tk){
