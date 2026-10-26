@@ -37,8 +37,10 @@ module.exports = async (req, res) => {
       const text = String(b.text || "").slice(0, 2000);
       const files = L.cleanFiles(b.files);
       if (!text && !files.length) throw L.fail(400, "Write a message or attach an image.");
-      const [m] = await L.db("messages", { method: "POST", body: { ticket_id: t.id, sender: "me", text, files } });
-      await L.db(`tickets?id=eq.${L.enc(t.id)}`, { method: "PATCH", prefer: "return=minimal", body: { updated_at: new Date().toISOString() } });
+      const [[m]] = await Promise.all([
+        L.db("messages", { method: "POST", body: { ticket_id: t.id, sender: "me", text, files } }),
+        L.db(`tickets?id=${L.enc(t.id)}`, { method: "PATCH", prefer: "return=minimal", body: { updated_at: new Date().toISOString() } }),
+      ]);
       return res.json(m);
     }
     throw L.fail(405, "Not supported.");
