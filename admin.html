@@ -57,6 +57,7 @@ img.proof{width:160px;border-radius:10px;border:1px solid #b7af98}
   <div class="card"><h3>الرومات والرولات والبوتات (بالدولار للوحدة)</h3><div class="grid2" id="fUnits"></div></div>
   <div class="card"><h3>أسعار العملات (بالدولار لكل عملة)</h3><div class="grid2" id="fRates"></div></div>
   <div class="card"><h3>كود الخصم</h3><div class="grid2" id="fCode"></div></div>
+  <div class="card"><h3>حسابات ديسكورد: السنة وسعر الواحد والاتنين وسعر التوريد 3 فأكتر</h3><div id="fAcc"></div><p class="row"><button class="ghost" id="addYear">إضافة سنة</button></p></div>
   <p class="row"><button id="savePrices">حفظ الأسعار</button><span id="pmsg" class="muted"></span></p>
 </section>
 <section id="tab-news">
@@ -115,15 +116,15 @@ async function loadTickets(){
   $("#tlist").innerHTML=list.map(t=>`<button class="item ${CUR===t.id?"on":""}" data-id="${esc(t.id)}"><b>${t.type==="purchase"?"شراء":"دعم"}</b> · ${esc(t.reason||"")}<br><span class="muted">${esc(t.email)}</span> <span class="tag">${t.status==="open"?"مفتوح":"مقفول"}</span></button>`).join("")||'<p class="muted">مفيش تكتات.</p>';
 }
 function openTicket(id){
-  CUR=id;loadTickets();loadTicket();
-  clearInterval(window.POLL);window.POLL=setInterval(()=>{if(CUR===id)loadTicket()},8000);
+  CUR=id;loadTickets();refreshOrders().then(loadTicket);
+  clearInterval(window.POLL);window.POLL=setInterval(()=>{if(CUR===id)loadTicket()},3000);
 }
+async function refreshOrders(){try{ORDERS=await call("/api/admin/orders")}catch(e){}}
 async function loadTicket(){
   if(!CUR) return;
   let t;
   try{
     t=await call("/api/admin/tickets?id="+CUR);
-    ORDERS=await call("/api/admin/orders").catch(()=>ORDERS);
   }catch(e){return say(e.message)}
   const draft=$("#reply")?$("#reply").value:"";
   const order=t.type==="purchase"?ORDERS.find(o=>o.id===t.order_id):null;
@@ -156,7 +157,7 @@ document.addEventListener("click",async e=>{
       say("اتحدّث الطلب");loadOrders();
     }else if(b.dataset.confirm){
       await call(`/api/admin/orders/${b.dataset.confirm}/confirm`,{method:"POST",body:"{}"});
-      say("اتأكد الطلب والفاتورة اتبعتت");loadTicket();loadOrders();
+      say("اتأكد الطلب والفاتورة اتبعتت");refreshOrders().then(loadTicket);loadOrders();
     }
   }catch(err){say(err.message)}
 });
@@ -184,16 +185,22 @@ const RATE_KEYS=[["BTC","BTC"],["ETH","ETH"],["USDT","USDT (BEP20)"],["SOL","SOL
 async function loadPrices(){
   let P;
   try{P=await fetch("/api/settings").then(r=>r.json());}catch(e){return say("تعذر تحميل الأسعار")}
+  renderAcc(P.accounts||[]);
   const field=(name,label,val,step)=>`<label>${label}<input type="number" step="${step}" min="0" data-g="${name}" value="${val}"></label>`;
   $("#fBase").innerHTML=BASE_KEYS.map(([k,l])=>field("base."+k,l,P.base[k],"0.01")).join("");
   $("#fUnits").innerHTML=UNIT_KEYS.map(([k,l])=>field("units."+k,l,P.units[k],"0.01")).join("");
   $("#fRates").innerHTML=RATE_KEYS.map(([k,l])=>field("rates."+k,l,P.rates[k],"any")).join("");
   $("#fCode").innerHTML=`<label>الكود<input type="text" data-g="code.word" value="${esc(P.code.word)}"></label>`+field("code.percent","نسبة الخصم %",P.code.percent,"1");
 }
+function accRow(r){return `<div class="accrow grid2" style="margin-bottom:8px"><label>السنة<input type="text" data-f="y" value="${esc(r.y)}"></label><label>سعر الواحد والاتنين ($)<input type="number" step="0.01" min="0" data-f="single" value="${r.single}"></label><label>سعر التوريد 3+ ($)<input type="number" step="0.01" min="0" data-f="bulk" value="${r.bulk}"></label><p><button class="ghost" data-accdel>حذف</button></p></div>`}
+function renderAcc(list){$("#fAcc").innerHTML=list.map(accRow).join("")}
+function accRows(){return [...document.querySelectorAll(".accrow")].map(r=>({y:r.querySelector('[data-f="y"]').value.trim(),single:Number(r.querySelector('[data-f="single"]').value),bulk:Number(r.querySelector('[data-f="bulk"]').value)}))}
+document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;if(b.dataset.accdel!==undefined){b.closest(".accrow").remove();return}if(b.id==="addYear")$("#fAcc").insertAdjacentHTML("beforeend",accRow({y:"",single:0,bulk:0}))});
 $("#savePrices").onclick=async()=>{
   const body={base:{},units:{},rates:{},code:{}};
   $$("[data-g]").forEach(i=>{const [g,k]=i.dataset.g.split(".");body[g][k]=i.type==="number"?Number(i.value):i.value});
   try{
+    body.accounts=accRows();
     await call("/api/admin/settings",{method:"POST",body:JSON.stringify(body)});
     $("#pmsg").textContent="تم الحفظ ✓";loadPrices();
   }catch(e){$("#pmsg").textContent=e.message}
