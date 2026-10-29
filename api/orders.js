@@ -32,7 +32,8 @@ module.exports = async (req, res) => {
     if (!L.valid(email)) throw L.fail(400, "Enter a valid email for your invoice.");
     const coin = String(b.coin || "");
     if (!L.COINS[coin]) throw L.fail(400, "Pick a coin first.");
-    const q = L.quote(b, await L.usedBefore(email), P), k = await L.pickK(coin), access = L.newToken();
+    const used = await L.usedBefore(email);
+    const q = b.kind === "account" ? L.quoteAccount(b, used, P) : L.quote(b, used, P), k = await L.pickK(coin), access = L.newToken();
     const [o] = await L.db("orders", { method: "POST", body: {
       email, access, notes: String(b.notes || "").slice(0, 500), pkg: q.pkg, c: q.c,
       sub_cents: q.subCents, pct: q.pct, total_cents: q.totalCents,
