@@ -10,6 +10,13 @@ module.exports = async (req, res) => {
       const o = await L.orderByToken(id, token);
       if (!o) throw L.fail(404, "Order not found.");
       if (req.method === "GET") return res.json(L.view(o));
+      if (action === "setup") {
+        if (o.status !== "paid") throw L.fail(400, "The questions open after the payment is confirmed.");
+        if (o.setup) throw L.fail(400, "The answers were already sent.");
+        const answers = L.cleanSetup(o.pkg, req.body || {});
+        const [up] = await L.db(`orders?id=eq.${L.enc(o.id)}`, { method: "PATCH", body: { setup: answers } });
+        return res.json(L.view(up));
+      }
       if (o.status === "paid") throw L.fail(400, "This order is already paid.");
       if (action === "coin") {
         const coin = String((req.body || {}).coin || "");
@@ -22,7 +29,7 @@ module.exports = async (req, res) => {
         const b = req.body || {};
         if (!String(b.image || "").startsWith("data:image/")) throw L.fail(400, "Send a screenshot image.");
         if (b.image.length > 3.4e6) throw L.fail(413, "The screenshot is too large. Send a smaller image.");
-        const [up] = await L.db(`orders?id=eq.${L.enc(o.id)}`, { method: "PATCH", body: { proof: { name: String(b.name || "transfer").slice(0, 80), data: b.image }, status: "review" } });
+        const [up] = await L.db(`orders?id=eq.${L.enc(o.id)}`, { method: "PATCH", body: { proof: { name: String(b.name || "transfer").slice(0, 80), data: b.image, at: new Date().toISOString() }, status: "review" } });
         return res.json(L.view(up));
       }
       throw L.fail(405, "Not supported.");
