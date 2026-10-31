@@ -76,6 +76,29 @@ h3{font-family:Fraunces,serif;font-weight:600;margin:4px 0 10px;font-size:19px}
 .mrow{display:flex}
 .bub{max-width:82%;padding:11px 14px;border-radius:20px;border-end-start-radius:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.12);font-size:15px;line-height:1.5;white-space:pre-wrap;word-break:break-word}
 .bub img{display:block;max-width:240px;border-radius:14px;margin-top:6px}
+.mrow .tk-card{margin:6px auto}
+.tk-card{position:relative;width:100%;max-width:340px;background:#fff;color:#111;border-radius:20px;box-shadow:0 30px 60px -28px #000}
+.tk-notch{position:absolute;top:50%;width:26px;height:26px;margin-top:-13px;border-radius:50%;background:#070707}
+.tk-notch.l{left:-13px}.tk-notch.r{right:-13px}
+.tk-top{padding:26px 24px 6px;text-align:center}
+.tk-check{width:58px;height:58px;margin:0 auto;border-radius:50%;background:#f0f0f0;display:grid;place-items:center;color:#111}
+.tk-check svg{width:30px;height:30px}
+.tk-top h4{margin:12px 0 2px;font-family:Fraunces,serif;font-size:24px;font-weight:600;color:#111}
+.tk-top p{margin:0;color:#666;font-size:14px}
+.tk-body{padding:12px 24px 22px;display:grid;gap:14px}
+.tk-dash{border-top:2px dashed #d4d4d4}
+.tk-grid{display:flex;justify-content:space-between;gap:12px}
+.tk-grid .r{text-align:end}
+.tk-grid .r b{font-family:Fraunces,serif;font-size:20px}
+.tk-body small{display:block;font-size:11px;letter-spacing:.08em;color:#777;text-transform:uppercase}
+.tk-body b{font-size:15px;color:#111;word-break:break-all}
+.tk-pay{display:flex;gap:10px;align-items:center;padding:12px;border-radius:14px;background:#f4f4f4}
+.tk-pay>div{min-width:0}
+.tk-pay .mono{display:block;font-size:12px;color:#555}
+.tk-coin{width:38px;height:38px;border-radius:50%;background:#111;color:#fff;display:grid;place-items:center;font-family:Fraunces,serif;font-size:18px;flex:none}
+.tk-bars{text-align:center}
+.tk-bars svg{width:100%;max-width:250px;height:auto;fill:#111}
+.tk-bars p{margin:4px 0 0;font-family:ui-monospace,Menlo,monospace;font-size:12px;letter-spacing:.3em;color:#555}
 .mine .bub{margin-inline-start:auto;background:#fff;color:var(--ink);border-color:transparent;border-end-start-radius:20px;border-end-end-radius:6px}
 .sumcard{display:grid;gap:2px;min-width:230px}
 .sumcard b.serif{font-family:Fraunces,serif;font-size:21px;margin-bottom:6px}
@@ -180,13 +203,13 @@ let LAST={head:"",ord:"",chat:""};
 
 // The customer's own texts, so the owner's view of a ticket matches what the customer sees.
 const D={
-en:{chatHello:"Hi, thanks for opening ticket {id}. Here is your order summary.",chatPickCoin:"Pick the coin you want to pay with, then send the exact amount.",chatProofBot:"Thanks. We are checking your transfer screenshot and will confirm here.",chatConfirmed:"Payment confirmed. Your order is in the queue.",chatDone:"Your server is ready. Thanks for ordering with joe.",chatSupFollow:"Anything else? Write it below and we will reply here.",invSent:"Invoice sent to",paid:"I have paid",amtLabel:"Amount to send",netLabel:"Network",warnTitle:"Important",warnText:"Send only to this address and only on the {net} network. If you send to another address or another network, we are not responsible and the funds cannot be recovered.",
+en:{tkThanks:"Thank you!",tkIssued:"Your ticket has been issued successfully",tkId:"Ticket ID",tkAmount:"Amount",tkDate:"Date & Time",tkSetupDone:"Answers sent",formYes:"Yes",formNo:"No",qName:"Server name you want",qDecor:"Do you want decoration in the rooms?",qColors:"Server colors (optional)",qNotes:"Anything else we should know (optional)",qContact:"Your Discord username, so we can deliver the accounts",chatHello:"Hi, thanks for opening ticket {id}. Here is your order summary.",chatPickCoin:"Pick the coin you want to pay with, then send the exact amount.",chatProofBot:"Thanks. We are checking your transfer screenshot and will confirm here.",chatConfirmed:"Payment confirmed. Your order is in the queue.",chatDone:"Your server is ready. Thanks for ordering with joe.",chatSupFollow:"Anything else? Write it below and we will reply here.",invSent:"Invoice sent to",paid:"I have paid",amtLabel:"Amount to send",netLabel:"Network",warnTitle:"Important",warnText:"Send only to this address and only on the {net} network. If you send to another address or another network, we are not responsible and the funds cannot be recovered.",
 pkg_community:"Community server",pkg_shop:"Shop package",pkg_store:"Store package",pkg_upgrade:"Upgrade a server",pkg_other:"Other servers",pkg_account:"Discord accounts",
 accYearLbl:"Year created",accQtyLbl:"How many accounts",rooms:"Rooms",roles:"Roles",bots:"Bots",discount:"Discount",total:"Total",
 invoiceTitle:"Invoice",invDate:"Date",invBill:"Billed to",invPkg:"Package",invExtras:"Rooms / roles / bots",invSub:"Subtotal",invDisc:"Discount (joehere)",invTotal:"Total paid",invPay:"Paid with",invStatus:"Status",invPaid:"Paid",contentLine:"{r} rooms, {ro} roles and {b} bots are ready in your server.",accDone:"{q} accounts from {y} delivered.",
 a_pay:"Pay the exact USD total in the coin you picked, then press “I have paid”.",a_del:"Your server is delivered once the payment is confirmed.",a_price:"Your total is the package price plus the rooms, roles and bots you chose. You see it before you pay.",a_other:"Write your question below and we will reply in this ticket.",
 r_pay:"Payment",r_del:"Server delivery",r_price:"Pricing",r_other:"Something else"},
-ar:{chatHello:"أهلا، شكرا إنك فتحت التكت {id}. ده ملخص طلبك.",chatPickCoin:"اختار العملة اللي هتدفع بيها، وبعدين ابعت المبلغ بالظبط.",chatProofBot:"شكرا، بنراجع صورة التحويل وهنأكد هنا.",chatConfirmed:"الدفع اتأكد. الأوردر دخل الطابور.",chatDone:"السيرفر جاهز. شكرا إنك طلبت من joe.",chatSupFollow:"في حاجة تانية؟ اكتبها تحت وهنرد هنا.",invSent:"الفاتورة اتبعتت على",paid:"دفعت",amtLabel:"المبلغ اللي تبعته",netLabel:"الشبكة",warnTitle:"مهم جدا",warnText:"ابعت على العنوان ده وعلى شبكة {net} بس. لو بعت على عنوان تاني أو شبكة تانية، إحنا مش مسؤولين، والفلوس مش هنقدر نسترجعها.",
+ar:{tkThanks:"شكرا!",tkIssued:"التكت اتصدر بنجاح",tkId:"رقم التكت",tkAmount:"المبلغ",tkDate:"التاريخ والوقت",tkSetupDone:"الردود اتبعتت",formYes:"أيوه",formNo:"لا",qName:"اسم السيرفر اللي عايزه",qDecor:"عايز زغرفه في الرومات؟",qColors:"ألوان السيرفر (اختياري)",qNotes:"أي تفاصيل تانية (اختياري)",qContact:"اسم المستخدم على ديسكورد عشان نسلمك الحسابات",chatHello:"أهلا، شكرا إنك فتحت التكت {id}. ده ملخص طلبك.",chatPickCoin:"اختار العملة اللي هتدفع بيها، وبعدين ابعت المبلغ بالظبط.",chatProofBot:"شكرا، بنراجع صورة التحويل وهنأكد هنا.",chatConfirmed:"الدفع اتأكد. الأوردر دخل الطابور.",chatDone:"السيرفر جاهز. شكرا إنك طلبت من joe.",chatSupFollow:"في حاجة تانية؟ اكتبها تحت وهنرد هنا.",invSent:"الفاتورة اتبعتت على",paid:"دفعت",amtLabel:"المبلغ اللي تبعته",netLabel:"الشبكة",warnTitle:"مهم جدا",warnText:"ابعت على العنوان ده وعلى شبكة {net} بس. لو بعت على عنوان تاني أو شبكة تانية، إحنا مش مسؤولين، والفلوس مش هنقدر نسترجعها.",
 pkg_community:"سيرفر كومينيتي",pkg_shop:"باقة الشوب",pkg_store:"باقة الاستور",pkg_upgrade:"تطوير سيرفر",pkg_other:"سيرفرات أخرى",pkg_account:"حسابات ديسكورد",
 accYearLbl:"سنة الإنشاء",accQtyLbl:"عدد الحسابات",rooms:"الرومات",roles:"الرولات",bots:"البوتات",discount:"الخصم",total:"الإجمالي",
 invoiceTitle:"فاتورة",invDate:"التاريخ",invBill:"الفاتورة لـ",invPkg:"الباقة",invExtras:"رومات / رولات / بوتات",invSub:"المجموع",invDisc:"الخصم (joehere)",invTotal:"الإجمالي المدفوع",invPay:"اتدفع بـ",invStatus:"الحالة",invPaid:"مدفوع",contentLine:"{r} روم و{ro} رول و{b} بوت جاهزين في سيرفرك.",accDone:"اتسلم {q} حساب من سنة {y}.",
@@ -315,7 +338,7 @@ function paintOrder(){
     const confirmBtn=paid?`<span class="pill ok">اتأكد الدفع ✓</span>`:(dead?"":`<button class="btn dark sm" data-act="confirm" data-oid="${esc(o.id)}">تأكيد الدفع</button>`);
     const other=paid?`<button class="btn ghost sm" data-act="refund" data-oid="${esc(o.id)}">استرجاع</button>`:(dead?"":`<button class="btn ghost sm" data-act="cancel" data-oid="${esc(o.id)}">إلغاء الطلب</button>`);
     html=`<div class="ordcard">
-      <div class="orow"><b class="mono">${esc(o.ref)}</b><span class="pill">${ORDER_STATUS[o.status]||esc(o.status)}</span><b class="amt">$${Number(o.usd).toFixed(2)}</b><span class="muted">${esc(o.pay.amount)} ${esc(o.pay.coin)} · ${esc(o.pay.net)}</span></div>
+      <div class="orow"><b class="mono">${esc(o.ref)}</b><span class="pill">${ORDER_STATUS[o.status]||esc(o.status)}</span><b class="amt">$${Number(o.usd).toFixed(2)}</b><span class="muted">${esc(o.pay.amount)} ${esc(o.pay.coin)} · ${esc(o.pay.net)}</span>${o.status==="paid"?`<span class="pill ${o.setup?"ok":""}">${o.setup?"الاستمارة اتبعتت ✓":"الاستمارة لسه ما اتملتش"}</span>`:""}</div>
       <div class="mono">${esc(o.pay.addr)}</div>
       <div class="orow">${proof}<span class="grow"></span>${confirmBtn}${other}</div></div>`;
   }
@@ -348,6 +371,7 @@ function timeline(t){
     items.push({f:"joe",text:T(lang,"invSent")+" "+o.email});
     items.push({f:"joe",text:T(lang,"chatDone")});
   }
+  if(t.type==="purchase"&&o&&o.setup) items.push({f:"me",kind:"setup",order:o});
   return {lang,items};
 }
 function sumCard(o,lang){
@@ -365,25 +389,43 @@ function payCard(o,lang){
     <div class="code">${esc(o.pay.addr)}</div>
     <div class="warn"><b>${T(lang,"warnTitle")}</b><p>${esc(T(lang,"warnText").replace("{net}",net))}</p></div></div>`;
 }
+const CHECK_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
+const GLYPH={BTC:"₿",ETH:"Ξ",USDT:"₮",SOL:"◎",LTC:"Ł"};
+const whenText=d=>d.toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"})+" • "+d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",hour12:false});
+const hashCode=str=>[...str].reduce((a,ch)=>{a=((a<<5)-a)+ch.charCodeAt(0);return a&a},0);
+const pseudo=n=>{const x=Math.sin(n)*10000;return x-Math.floor(x)};
+function barBars(value){const seed=hashCode(String(value));return Array.from({length:60},(_,i)=>({w:pseudo(seed+i)>0.7?2.5:1.5}))}
+function barcodeSVG(value){
+  const bars=barBars(value), sp=1.5, W=250, H=70;
+  const total=bars.reduce((a,b)=>a+b.w+sp,0)-sp; let x=(W-total)/2;
+  const rects=bars.map(b=>{const r=`<rect x="${x.toFixed(2)}" y="10" width="${b.w}" height="50"/>`;x+=b.w+sp;return r}).join("");
+  return `<div class="tk-bars"><svg viewBox="0 0 ${W} ${H}" aria-label="Barcode ${esc(value)}">${rects}</svg><p>${esc(value)}</p></div>`;
+}
 function invCard(o,lang){
-  const L2=k=>T(lang,k), v=o.inv||{};
-  const extras=o.pkg==="account"?`${o.c.year} × ${o.c.qty}`:`${o.c.rooms} / ${o.c.roles} / ${o.c.bots}`;
-  const cont=o.pkg==="account"
-    ?L2("accDone").replace("{q}",o.c.qty).replace("{y}",o.c.year)
-    :L2("contentLine").replace("{r}",o.c.rooms).replace("{ro}",o.c.roles).replace("{b}",o.c.bots);
-  return `<div class="sumcard"><b class="serif">${L2("invoiceTitle")} · ${esc(v.no||"")}</b>
-    ${row(L2("invDate"),v.date||"")}${row(L2("invBill"),v.email||o.email)}${row(L2("invPkg"),L2("pkg_"+o.pkg))}
-    ${row(L2("invExtras"),extras)}${row(L2("invSub"),"$"+Number(o.sub).toFixed(2))}
-    ${o.pct?row(L2("invDisc"),"−$"+(o.sub-o.usd).toFixed(2)):""}${row(L2("invTotal"),"$"+Number(o.usd).toFixed(2))}
-    ${row(L2("invPay"),o.pay.coin)}${row(L2("invStatus"),L2("invPaid"))}
-    <p class="cont">${esc(cont)}</p></div>`;
+  const L2=k=>T(lang,k), v=o.inv||{}, when=new Date(v.at||Date.now());
+  const seed=String(o.ref||"").replace(/\D/g,"").padStart(14,"0");
+  return `<div class="tk-card still"><span class="tk-notch l"></span><span class="tk-notch r"></span>
+    <div class="tk-top"><div class="tk-check">${CHECK_SVG}</div><h4>${L2("tkThanks")}</h4><p>${L2("tkIssued")}</p></div>
+    <div class="tk-body"><div class="tk-dash"></div>
+      <div class="tk-grid"><div><small>${L2("tkId")}</small><b class="mono">${esc(o.ref)}</b></div><div class="r"><small>${L2("tkAmount")}</small><b>$${Number(v.total!=null?v.total:o.usd).toFixed(2)}</b></div></div>
+      <div><small>${L2("tkDate")}</small><b>${whenText(when)}</b></div>
+      <div class="tk-pay"><span class="tk-coin">${GLYPH[o.pay.coin]||""}</span><div><b>${esc(o.email)}</b><span class="mono">${esc(o.pay.coin)} · ${esc(o.pay.net)}</span></div></div>
+      <div class="tk-dash"></div>${barcodeSVG(seed)}</div></div>`;
+}
+function setupCard(o,lang){
+  const s=o.setup||{}, isAcc=o.pkg==="account";
+  const qs=isAcc?["qContact","qNotes"]:["qName","qDecor","qColors","qNotes"];
+  const keys=isAcc?["contact","notes"]:["name","decor","colors","notes"];
+  const rows=qs.map((q,i)=>{const k=keys[i];const v=k==="decor"?(s[k]==="yes"?T(lang,"formYes"):T(lang,"formNo")):(s[k]||"—");return row(T(lang,q),v)}).join("");
+  return `<div class="sumcard"><b class="serif">${T(lang,"tkSetupDone")}</b>${rows}</div>`;
 }
 function bubble(it,lang){
+  if(it.kind==="inv")return `<div class="mrow">${invCard(it.order,lang)}</div>`;
   const mine=it.f==="me";
   let inner;
   if(it.kind==="sum") inner=sumCard(it.order,lang);
   else if(it.kind==="pay") inner=it.full?payCard(it.order,lang):`${T(lang,"amtLabel")} <b>${esc(it.order.pay.amount)} ${esc(it.order.pay.coin)}</b>`;
-  else if(it.kind==="inv") inner=invCard(it.order,lang);
+  else if(it.kind==="setup") inner=setupCard(it.order,lang);
   else inner=esc(it.text||"")+(it.files||[]).map(f=>`<img src="${esc(f.data)}" alt="">`).join("");
   return `<div class="mrow${mine?" mine":""}"><div class="bub" dir="auto">${inner}</div></div>`;
 }
@@ -407,8 +449,11 @@ $("#tview").onclick=async e=>{
     }
     else if(act==="delete"){
       if(!confirm("هيتمسح التكت والرسايل كلها نهائيا، ومش هيرجع. متأكد؟")) return;
-      await call(`/api/admin/tickets?id=${CUR}&action=delete`,{method:"POST",body:"{}"});
-      clearInterval(TIMER); emptyView(); say("اتحذف التكت"); loadList();
+      const id=CUR;
+      try{ await call(`/api/admin/tickets?id=${id}&action=delete`,{method:"POST",body:"{}"}) }
+      catch(err){ alert("الحذف ما اتعملش: "+err.message); return }
+      LIST=LIST.filter(x=>x.id!==id);
+      clearInterval(TIMER); emptyView(); renderList(); say("اتحذف التكت");
     }
     else if(act==="confirm"){
       await call(`/api/admin/orders/${b.dataset.oid}/confirm`,{method:"POST",body:"{}"});
@@ -538,9 +583,14 @@ async function loadLinks(){
   $("#lProfile").value=L.profile||"";
 }
 $("#saveLinks").onclick=async()=>{
+  const want={server:$("#lServer").value.trim(),profile:$("#lProfile").value.trim()};
+  $("#lmsg").textContent="جاري الحفظ...";
   try{
-    const r=await call("/api/admin/settings",{method:"POST",body:JSON.stringify({links:{server:$("#lServer").value.trim(),profile:$("#lProfile").value.trim()}})});
-    $("#lmsg").textContent=r.links.server?"اتحفظ ✓ زرار السيرفر ظاهر على الموقع":"اتحفظ ✓ مفيش رابط سيرفر، فالزرار مخفي";
+    await call("/api/admin/settings",{method:"POST",body:JSON.stringify({links:want})});
+    // check that it really saved (an old server file would answer without saving the links)
+    const now=(await fetch("/api/settings").then(r=>r.json())).links||{};
+    if((now.server||"")!==want.server) return $("#lmsg").textContent="الحفظ ما اتسجلش. اتأكد إن ملف api/admin/settings.js اترفع على GitHub، وإن Vercel عمل Deploy جديد.";
+    $("#lmsg").textContent=want.server?"اتحفظ ✓ زرار السيرفر ظاهر على الموقع":"اتحفظ ✓ مفيش رابط سيرفر، فالزرار مخفي";
   }catch(e){$("#lmsg").textContent=e.message}
 };
 
