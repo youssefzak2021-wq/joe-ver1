@@ -50,12 +50,12 @@ button:focus-visible,a:focus-visible,textarea:focus-visible,input:focus-visible{
 .links a:hover{background:rgba(255,255,255,.1);color:#fff}
 main{max-width:1160px;margin:0 auto;padding:0 6vw}
 .hero{padding-top:clamp(40px,8vw,96px)}
-.wm{display:flex;direction:ltr;font-family:Fraunces,serif;font-weight:600;font-size:clamp(140px,31vw,340px);line-height:.8;letter-spacing:-.06em;margin-inline-start:-.04em;padding-bottom:.3em;color:#fff}
+.wm{display:flex;direction:ltr;font-family:Fraunces,serif;font-weight:600;font-size:clamp(120px,22vw,250px);line-height:.8;letter-spacing:-.06em;margin-inline-start:-.04em;padding-bottom:.3em;color:#fff}
 .wm span{display:inline-block;animation:rise 1.2s cubic-bezier(.2,.8,.2,1) both}
 .wm span:nth-child(2){animation-delay:.12s}
 .wm span:nth-child(3){animation-delay:.24s}
 @keyframes rise{from{transform:translateY(60%);opacity:0;filter:blur(8px)}to{transform:none;opacity:1;filter:none}}
-.hero-grid{display:grid;grid-template-columns:1fr;gap:40px;align-items:end;margin-top:clamp(40px,6vw,70px)}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin-top:clamp(40px,6vw,70px)}
 .lead{font-size:clamp(20px,2.3vw,26px);line-height:1.5;max-width:30ch;margin-bottom:26px;color:#fff}
 .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 .chip{font-size:14px;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid var(--line);color:var(--mute)}
@@ -200,6 +200,9 @@ html[dir=rtl] .drawer{transform:translateX(-135%)}
 .yr{display:grid;gap:6px;justify-items:center;align-content:center;min-height:112px;padding:18px 10px;border-radius:24px;border:1px solid rgba(255,255,255,.16);background:linear-gradient(160deg,rgba(255,255,255,.14),rgba(255,255,255,.03));backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);color:var(--fg);cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 16px 30px -20px #000;transition:transform .35s cubic-bezier(.2,.8,.2,1),background .3s,color .3s,box-shadow .3s}
 .yr b{font-family:Fraunces,serif;font-weight:600;font-size:28px;letter-spacing:-.02em;line-height:1}
 .yr:hover{transform:translateY(-3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 24px 40px -18px #000}
+.yr:disabled{opacity:.42;cursor:not-allowed;transform:none;box-shadow:none}
+.yr.out b{text-decoration:line-through;text-decoration-thickness:2px}
+.yr .oos{font-size:10px;font-weight:700;letter-spacing:.08em;padding:3px 7px;border-radius:999px;border:1px solid rgba(255,255,255,.45);color:#fff;white-space:nowrap}
 .yr.on{background:linear-gradient(180deg,#fff,#d6d6d6);color:var(--ink);border-color:transparent;box-shadow:0 22px 36px -16px rgba(255,255,255,.35)}
 #accYears{grid-template-columns:repeat(auto-fill,minmax(92px,1fr))}
 #accYears .yr{min-height:64px;padding:12px 8px}
@@ -222,6 +225,37 @@ html[dir=rtl] .drawer{transform:translateX(-135%)}
 @media(max-width:820px){.hero-grid{grid-template-columns:1fr}}
 @media(max-width:640px){.links{display:none}.nav{margin-inline:12px}section{padding-top:72px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+.paths{display:grid;gap:12px}
+.path{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:20px 22px;text-decoration:none;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
+.path:hover{transform:translateY(-3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 26px 40px -22px #000}
+.path b{display:block;font-family:Fraunces,serif;font-size:26px;font-weight:600;color:#fff;letter-spacing:-.02em}
+html[lang=ar] .path b{font-family:Tajawal,sans-serif;font-weight:700;letter-spacing:0}
+.path small{display:block;color:var(--mute);font-size:14px;margin-top:4px;line-height:1.4}
+.path .pv{text-align:end;flex:none;display:grid;gap:2px}
+.path .pv small{margin:0;font-size:12px}
+.path .pv span{font-family:Fraunces,serif;font-size:30px;color:#fff;font-variant-numeric:tabular-nums}
+.extras{display:flex;flex-wrap:wrap;align-items:center;gap:10px 24px;padding:18px 24px;margin-top:20px;font-size:15px;color:var(--mute)}
+.extras .lbl{font-weight:700;color:#fff}
+.extras b{color:#fff;font-variant-numeric:tabular-nums}
+.acc-grid{display:grid;grid-template-columns:1fr 340px;gap:22px;align-items:start}
+.acc-steps{display:grid;gap:14px}
+.step-h{display:flex;align-items:center;margin-top:8px}
+.step-h.split{justify-content:space-between;gap:12px}
+.step-h .lbl{display:flex;align-items:center;gap:10px}
+.step-h .num{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#fff;color:var(--ink);font-size:14px;font-weight:700;flex:none}
+.step-h b{font-size:17px;color:#fff}
+.acc-sum{padding:26px;display:grid;gap:12px;position:sticky;top:96px}
+.abar{display:none}
+@media(max-width:820px){.acc-grid{grid-template-columns:1fr}.acc-sum{position:static}.abar.on{display:flex;position:fixed;inset-inline:12px;bottom:12px;z-index:50;align-items:center;justify-content:space-between;gap:12px;padding:10px 10px 10px 18px;border-radius:999px}.abar small{display:block;color:var(--mute);font-size:12px}.abar b{font-family:Fraunces,serif;font-size:24px;color:#fff;font-variant-numeric:tabular-nums}.rate{bottom:84px}}
+@media(max-width:640px){.drawer{top:0;bottom:0;inset-inline:0;width:100%;border-radius:0;padding:18px 16px}#pmsgs,#omsgs{max-height:calc(100dvh - 240px)}.tilt{transform:none!important}h2{font-size:42px}.pkg h3{font-size:26px}.wm{font-size:clamp(120px,40vw,200px)}}
+.rate-box{display:grid;gap:10px;padding:18px;margin-top:8px}
+.rate-box textarea{margin:0}
+.rate-box .stars{justify-content:center}
+.stars-s{font-size:26px;letter-spacing:4px;color:#fff}
+.rate-box .stars button{font-size:34px}
+.lnks{margin-top:18px}
+.lnks .gbtn{min-width:0}
 </style>
 </head>
 <body>
@@ -230,7 +264,7 @@ html[dir=rtl] .drawer{transform:translateX(-135%)}
 <header class="nav glass">
   <a class="logo" href="#top"><svg class="mark" viewBox="0 0 200 200" aria-hidden="true" fill="#F5F5F5"><g transform="translate(-3,-1)"><path d="M97.0 11.0 Q128.6 57.8 177.0 87.0 Q134.1 90.6 116.0 124.0 Q105.4 82.2 78.0 58.0 Q99.9 49.4 97.0 11.0 Z"/><path d="M89.0 77.0 Q99.7 118.4 127.0 142.0 Q104.9 151.8 107.0 192.0 Q76.8 143.1 30.0 112.0 Q71.6 109.7 89.0 77.0 Z"/></g></svg>joe</a>
   <nav class="links">
-    <a href="#create" data-k="navCreate"></a><a href="#upgrade" data-k="navUpgrade"></a><a href="#support" data-k="navSupport"></a>
+    <a href="#create" data-k="navCreate"></a><a href="#accounts" data-k="navAccounts"></a><a href="#upgrade" data-k="navUpgrade"></a><a href="#support" data-k="navSupport"></a>
   </nav>
   <button class="gbtn sm" id="myt" type="button" data-k="myTickets"></button>
   <button class="gbtn sm" id="acct" type="button"></button>
@@ -245,22 +279,13 @@ html[dir=rtl] .drawer{transform:translateX(-135%)}
         <p class="lead" data-k="heroLead"></p>
         <div class="row"><a class="gbtn dark" href="#create" data-k="heroCta"></a><span class="chip" data-k="heroNote"></span></div>
       </div>
+      <div class="paths">
+        <a class="glass path" href="#create"><div><b data-k="pathServer"></b><small data-k="pathServerSub"></small></div><div class="pv"><small data-k="from"></small><span data-base="community"></span></div></a>
+        <a class="glass path" href="#accounts"><div><b data-k="pathAcc"></b><small data-k="pathAccSub"></small></div><div class="pv"><small data-k="from"></small><span data-accfrom></span></div></a>
+        <a class="glass path" href="#upgrade"><div><b data-k="pathUp"></b><small data-k="pathUpSub"></small></div><div class="pv"><small data-k="from"></small><span data-base="upgrade"></span></div></a>
+      </div>
     </div>
   </section>
-
-  <section id="pay">
-    <div class="sh"><h2 data-k="payTitle"></h2><p data-k="paySub"></p></div>
-    <div class="coins-grid">
-      <div class="glass pcoin tilt"><span class="mono">₿</span><div><b>Bitcoin</b><small>BTC</small></div></div>
-      <div class="glass pcoin tilt"><span class="mono">Ξ</span><div><b>Ethereum</b><small>ETH</small></div></div>
-      <div class="glass pcoin tilt"><span class="mono">₮</span><div><b>Tether</b><small>USDT · BEP20</small></div></div>
-      
-      <div class="glass pcoin tilt"><span class="mono">◎</span><div><b>Solana</b><small>SOL</small></div></div>
-      <div class="glass pcoin tilt"><span class="mono">Ł</span><div><b>Litecoin</b><small>LTC</small></div></div>
-    </div>
-  </section>
-
-  <div class="revs" data-dir="fwd"></div>
 
   <section id="create">
     <div class="sh"><h2 data-k="createTitle"></h2><p data-k="createSub"></p></div>
@@ -269,6 +294,7 @@ html[dir=rtl] .drawer{transform:translateX(-135%)}
       <article class="glass pkg tilt"><h3 data-k="pkg_shop"></h3><p data-k="d_shop"></p><div class="price"><span data-k="from"></span><span class="amt" data-base="shop"></span></div><button class="gbtn dark" data-cfg="shop" data-k="choose"></button></article>
       <article class="glass pkg tilt"><h3 data-k="pkg_store"></h3><p data-k="d_store"></p><div class="price"><span data-k="from"></span><span class="amt" data-base="store"></span></div><button class="gbtn dark" data-cfg="store" data-k="choose"></button></article>
     </div>
+    <div class="glass extras" data-extras></div>
   </section>
 
   <section id="upgrade">
@@ -282,25 +308,45 @@ html[dir=rtl] .drawer{transform:translateX(-135%)}
   <section id="accounts">
     <div class="sh"><h2 data-k="accTitle"></h2><p data-k="accSub"></p></div>
     <p class="rule" data-k="accRule"></p>
-    <div class="glass rim acc" id="accBox">
-      <div class="tiers">
-        <button class="tier" data-acctier="single" data-k="accTierSingle"></button>
-        <button class="tier" data-acctier="bulk" data-k="accTierBulk"></button>
+    <div class="acc-grid">
+      <div class="acc-steps">
+        <div class="step-h"><span class="lbl"><span class="num">1</span><b data-k="accStep1"></b></span></div>
+        <div class="tiers">
+          <button class="tier" data-acctier="single" data-k="accTierSingle"></button>
+          <button class="tier" data-acctier="bulk" data-k="accTierBulk"></button>
+        </div>
+        <div class="step-h"><span class="lbl"><span class="num">2</span><b data-k="accYearsLbl"></b></span></div>
+        <div class="yrs" id="accYears"></div>
+        <div class="step-h split">
+          <span class="lbl"><span class="num">3</span><b data-k="accQtyLbl"></b></span>
+          <div class="n"><button data-accq="-1" aria-label="-1">−</button><b id="accQty">1</b><button data-accq="1" aria-label="+1">+</button></div>
+        </div>
+        <p class="ask" id="accBulk" data-k="accBulkNote" hidden></p>
       </div>
-      <p class="ask" data-k="accYearsLbl"></p>
-      <div class="yrs" id="accYears"></div>
-      <p class="pick" id="accPick"></p>
-      <div class="step"><span data-k="accQtyLbl"></span><div class="n"><button data-accq="-1" aria-label="-1">−</button><b id="accQty">1</b><button data-accq="1" aria-label="+1">+</button></div></div>
-      <div class="sum"><span data-k="accUnitLbl"></span><span id="accUnit"></span></div>
-      <div class="sum"><span class="serif" data-k="accTotalLbl"></span><span class="tot" id="accTotal"></span></div>
-      <p class="ask" id="accBulk" data-k="accBulkNote" hidden></p>
-      <input id="accEmail" type="email" autocomplete="email" class="mailin">
-      <p class="err" id="accErr" role="alert"></p>
-      <button class="gbtn dark full" id="accBuy" data-k="accBuy"></button>
+      <aside class="glass rim acc-sum" id="accBox">
+        <p class="pick" id="accPick"></p>
+        <div class="sum"><span data-k="accUnitLbl"></span><span id="accUnit"></span></div>
+        <div class="sum"><span class="serif" data-k="accTotalLbl"></span><span class="tot" id="accTotal"></span></div>
+        <input id="accEmail" type="email" autocomplete="email" class="mailin">
+        <p class="err" id="accErr" role="alert"></p>
+        <button class="gbtn dark full" id="accBuy" data-k="accBuy"></button>
+      </aside>
+    </div>
+    <div class="glass abar" id="abar"><div><small data-k="accTotalLbl"></small><b id="abarTot">$0.00</b></div><button class="gbtn dark" id="abarBuy" data-k="accBuy"></button></div>
+  </section>
+
+  <section id="pay">
+    <div class="sh"><h2 data-k="payTitle"></h2><p data-k="paySub"></p></div>
+    <div class="coins-grid">
+      <div class="glass pcoin tilt"><span class="mono">₿</span><div><b>Bitcoin</b><small>BTC</small></div></div>
+      <div class="glass pcoin tilt"><span class="mono">Ξ</span><div><b>Ethereum</b><small>ETH</small></div></div>
+      <div class="glass pcoin tilt"><span class="mono">₮</span><div><b>Tether</b><small>USDT · BEP20</small></div></div>
+      <div class="glass pcoin tilt"><span class="mono">◎</span><div><b>Solana</b><small>SOL</small></div></div>
+      <div class="glass pcoin tilt"><span class="mono">Ł</span><div><b>Litecoin</b><small>LTC</small></div></div>
     </div>
   </section>
 
-  <div class="revs" data-dir="rev"></div>
+  <div class="revs" data-dir="fwd"></div>
 
   <section id="news">
     <div class="sh"><h2 data-k="newsTitle"></h2><p data-k="newsSub"></p></div>
@@ -309,7 +355,9 @@ html[dir=rtl] .drawer{transform:translateX(-135%)}
 
   <section id="support">
     <div class="glass rim supp">
-      <div><h2 data-k="supHead"></h2><p data-k="supSub2"></p></div>
+      <div><h2 data-k="supHead"></h2><p data-k="supSub2"></p>
+        <div class="row lnks"><a class="gbtn" id="lnkProfile" href="https://discord.com/users/1266090280604536996" target="_blank" rel="noopener" data-k="lnkProfile"></a><a class="gbtn" id="lnkServer" href="#" target="_blank" rel="noopener" data-k="lnkServer" hidden></a></div>
+      </div>
       <button class="gbtn dark" data-sup data-k="supBtn"></button>
     </div>
   </section>
@@ -410,8 +458,8 @@ const REVIEWS=[
 const S={lang:"en",pkg:"community",c:{rooms:0,roles:0,bots:0},tickets:[],act:null,own:null,seq:1000,stars:0,user:null,disc:0,staged:[],pending:null,reviews:REVIEWS.slice()};
 
 const L={
-en:{navCreate:"Create",accTierSingle:"Single (1 or 2)",accTierBulk:"Bulk (3 or more)",accYearsLbl:"Choose the year",accPickLbl:"Selected",accBuyThis:"Buy",plSingle:"Single price (1 or 2 accounts)",plBulk:"Bulk price (3 accounts or more)",accTitle:"Discord accounts for sale",accSub:"Pick the year and how many you need. The price updates as you go.",accRule:"Delivery: from 10 minutes up to 30 minutes after payment is confirmed.",accYearLbl:"Year created",accQtyLbl:"How many accounts",accUnitLbl:"Price per account",accTotalLbl:"Total",accEach:"each",accBulkNote:"3 or more accounts get the bulk price.",accBuy:"Buy now",pkg_account:"Discord accounts",liveOnly:"Available on the live site.",accDone:"{q} accounts from {y} delivered.",invEmail:"Your email for the invoice",yourEmail:"Your email",ticketClosed:"joe closed this ticket. Open a new one if you need more help.",ticketOpened:"joe reopened this ticket.",mailWarn:"Account created, but the welcome email failed",otpTitle:"Enter verification code",otpSub:"We emailed a 6-digit code to",otpVerify:"Verify",otpNoCode:"Didn't get the code?",otpResend:"Resend",otpBack:"Change email or password",otpNeed:"Enter all 6 digits.",myTickets:"My tickets",noTickets:"No tickets yet. Open one from a package or from support.",signInForTickets:"Sign in to see your tickets.",newsTitle:"Codes and news",newsSub:"Latest offers and updates from joe.",authTitleIn:"Sign in to your account",authTitleUp:"Create your account",errNoAcc:"No account with this email yet. Create one first.",uploadProof:"Upload transfer screenshot",proofNeed:"Send a screenshot of your transfer. We confirm the order after checking it.",chatProofBot:"Thanks. We are checking your transfer screenshot and will confirm here.",codeSent:"We sent a 6-digit code to your email.",verifyBtn:"Verify and create account",checkPay:"Check payment",codeLabel:"Verification code",notYet:"No payment seen yet. Transactions can take a few minutes after you send them.",netLabel:"Network",amtLabel:"Amount to send",copyAmt:"Copy amount",copyAddr:"Copy address",openWallet:"Open wallet",warnTitle:"Important",warnText:"Send only to this address and only on the {net} network. If you send to another address or another network, we are not responsible and the funds cannot be recovered.",ackText:"I understand. I will send only to this address, on this network.",policies:"Policies",walletHint:"If your wallet did not open, copy the amount and the address and paste them into your wallet.",payTitle:"Pay with crypto",paySub:"Choose the coin at checkout. Prices are always in USD.",code:"Discount code",apply:"Apply",codeOk:"10% off applied. It works on your first order.",codeUsed:"This code is only for your first order.",codeNeedLogin:"Sign in first to use this code.",codeBad:"This code is not valid.",discount:"Discount",login:"Sign in",authIn:"Sign in",authUp:"Create account",authSwitchUp:"New here? Create an account",authSwitchIn:"Already have an account? Sign in",authTitle:"Sign in to continue",authHint:"Invoices and order updates go to this email.",email:"Email",password:"Password",errEmail:"Enter a valid email.",errPass:"Password needs at least 6 characters.",errWrong:"Wrong email or password.",errExists:"An account with this email already exists.",hi:"Signed in as",outDone:"Signed out",attPhoto:"Photo",attFile:"File",tooBig:"File is larger than 8 MB.",invoiceTitle:"Invoice",invSent:"Invoice sent to",invDate:"Date",invBill:"Billed to",invPkg:"Package",invExtras:"Rooms / roles / bots",invSub:"Subtotal",invDisc:"Discount (joehere)",invTotal:"Total paid",invPay:"Paid with",invStatus:"Status",invPaid:"Paid",contentLine:"{r} rooms, {ro} roles and {b} bots are ready in your server.",revTitle:"What customers say",revAvg:"Average",chatHello:"Hi, thanks for opening ticket {id}. Here is your order summary.",chatPickCoin:"Pick the coin you want to pay with, then send the exact amount.",chatAck:"Got it. We will reply here shortly.",chatPaidBot:"Thanks. We are checking the transaction now.",chatConfirmed:"Payment confirmed. Your order is in the queue.",chatDone:"Your server is ready. Thanks for ordering with joe.",chatSupFollow:"Anything else? Write it below and we will reply here.",chatCoinMe:"Paying with",ownBack:"Back",newReply:"New message from joe",ch_community:"# welcome|# rules|# general|# voice",ch_shop:"# products|# orders|# tickets|# reviews",ch_store:"# catalogue|# checkout|# support|# announcements",ch_upgrade:"# new-rooms|# roles-setup|# bots",ch_other:"# rewards|# giveaways|# logs",navUpgrade:"Upgrade",navSupport:"Support",langBtn:"العربية",heroLead:"Discord servers built to order. Priced in USD, paid only in crypto.",heroCta:"Start an order",heroNote:"Crypto only",exLabel:"Example quote",exName:"Community server, 12 rooms, 6 roles, 3 bots",createTitle:"Create a server",createSub:"Pick a type, then choose the rooms, roles and bots you need. The total updates as you go.",upgradeTitle:"Upgrade & other servers",upgradeSub:"Change a server you already run, or build a custom one like rewards.",from:"From",choose:"Choose",pkg_community:"Community server",pkg_shop:"Shop package",pkg_store:"Store package",pkg_upgrade:"Upgrade a server",pkg_other:"Other servers",d_community:"A ready community setup with channels, roles and a welcome flow.",d_shop:"Product channels, ticketing and an order flow for a small shop.",d_store:"A full store layout with catalogue, checkout and support channels.",d_upgrade:"Add or change rooms, roles and bots on a server you already have.",d_other:"Rewards, giveaways and other custom servers.",rooms:"Rooms",roles:"Roles",bots:"Bots",notes:"Notes for us (optional)",base:"Base price",total:"Total",openTicket:"Open purchase ticket",supHead:"Need help?",supSub2:"Pick a reason and get the answer right away. Still stuck? Send us a message.",supBtn:"Open support",supTitle:"What do you need help with?",supSub:"Pick a reason first and we will show you the answer.",r_pay:"Payment",r_del:"Server delivery",r_price:"Pricing",r_other:"Something else",a_pay:"Pay the exact USD total in the coin you picked, then press “I have paid”.",a_del:"Your server is delivered once the payment is confirmed.",a_price:"Your total is the package price plus the rooms, roles and bots you chose. You see it before you pay.",a_other:"Write your question below and we will reply in this ticket.",msgPh:"Write a message",send:"Send",st_open:"Open",st_wait:"Awaiting payment",st_verify:"Waiting for confirmation",st_done:"Order confirmed",sendExact:"Send exactly",payWith:"in",copy:"Copy",copied:"Copied",paid:"I have paid",ownTitle:"Inbox",ownEmpty:"No tickets yet",confirm:"Confirm",ownerLink:"Owner inbox",foot:"© joe. Crypto payments only.",rateBtn:"Rate",rateTitle:"How was it?",rateSend:"Send",rated:"Thanks for your rating",newTicket:"New purchase ticket",newOrder:"Payment marked. New order",newSupport:"New support ticket",msgSent:"Message sent to support",confirmed:"Order confirmed"},
-ar:{navCreate:"إنشاء سيرفر",accTierSingle:"فردي (حساب أو اتنين)",accTierBulk:"توريد (3 فأكتر)",accYearsLbl:"اختار سنة الإنشاء",accPickLbl:"اخترت",accBuyThis:"اشتري",plSingle:"أسعار الفردي (حساب أو اتنين)",plBulk:"أسعار التوريد (من 3 حسابات فأكتر)",accTitle:"حسابات ديسكورد للبيع",accSub:"اختار السنة وعدد الحسابات، والسعر بيتحدث على طول.",accRule:"التسليم بيكون في حدود من 10 دقايق لحد نص ساعة بعد تأكيد الدفع.",accYearLbl:"سنة الإنشاء",accQtyLbl:"عدد الحسابات",accUnitLbl:"سعر الحساب",accTotalLbl:"الإجمالي",accEach:"للحساب",accBulkNote:"من 3 حسابات فأكتر بيتحسب سعر التوريد.",accBuy:"اشتري دلوقتي",pkg_account:"حسابات ديسكورد",liveOnly:"متاح على الموقع الحقيقي.",accDone:"اتسلم {q} حساب من سنة {y}.",invEmail:"إيميلك عشان توصلك الفاتورة",yourEmail:"إيميلك",ticketClosed:"joe قفل التكت ده. لو محتاج مساعدة تاني افتح تكت جديد.",ticketOpened:"joe فتح التكت ده تاني.",mailWarn:"اتعمل الحساب، بس إيميل الترحيب ماتبعتش",otpTitle:"اكتب كود التحقق",otpSub:"بعتنالك كود من 6 أرقام على",otpVerify:"تأكيد",otpNoCode:"ماوصلكش الكود؟",otpResend:"ابعته تاني",otpBack:"غيّر الإيميل أو الباسورد",otpNeed:"اكتب الـ6 أرقام كلهم.",myTickets:"تكتاتي",noTickets:"مفيش تكتات لسه. افتح واحد من الباقات أو من الدعم.",signInForTickets:"سجل دخولك عشان تشوف تكتاتك.",newsTitle:"الأكواد والأخبار",newsSub:"آخر العروض والتحديثات من joe.",authTitleIn:"سجل دخولك لحسابك",authTitleUp:"اعمل حسابك الجديد",errNoAcc:"مفيش حساب بالإيميل ده لسه. اعمل حساب الأول.",uploadProof:"ارفع صورة التحويل",proofNeed:"ابعت صورة للتحويل. هنأكد الطلب بعد ما نراجعها.",chatProofBot:"شكرا، بنراجع صورة التحويل وهنأكد هنا.",codeSent:"بعتنالك كود من 6 أرقام على الإيميل.",verifyBtn:"أكد وأنشئ الحساب",checkPay:"تحقق من الدفع",codeLabel:"كود التحقق",notYet:"لسه مش لاقيين الدفع. التحويل ممكن ياخد دقايق بعد ما تبعته.",netLabel:"الشبكة",amtLabel:"المبلغ اللي تبعته",copyAmt:"انسخ المبلغ",copyAddr:"انسخ العنوان",openWallet:"افتح المحفظة",warnTitle:"مهم جدا",warnText:"ابعت على العنوان ده وعلى شبكة {net} بس. لو بعت على عنوان تاني أو شبكة تانية، إحنا مش مسؤولين، والفلوس مش هنقدر نسترجعها.",ackText:"فهمت، وهبعت على العنوان ده وعلى الشبكة دي بس.",policies:"السياسات",walletHint:"لو المحفظة ما فتحتش، انسخ المبلغ والعنوان وحطهم في المحفظة يدويا.",payTitle:"الدفع بالكريبتو",paySub:"اختار العملة وقت الدفع. الأسعار دايما بالدولار.",code:"كود الخصم",apply:"طبّق",codeOk:"الخصم 10% اتطبق، وصالح على أول طلب ليك.",codeUsed:"الكود ده لأول طلب بس.",codeNeedLogin:"سجل دخولك الأول عشان تستخدم الكود.",codeBad:"الكود ده مش صحيح.",discount:"الخصم",login:"تسجيل الدخول",authIn:"دخول",authUp:"إنشاء حساب",authSwitchUp:"أول مرة؟ اعمل حساب",authSwitchIn:"عندك حساب؟ ادخل",authTitle:"سجل دخولك عشان تكمل",authHint:"الفواتير وتحديثات الطلب هتروح على الإيميل ده.",email:"الإيميل",password:"الباسورد",errEmail:"اكتب إيميل صحيح.",errPass:"الباسورد لازم يكون 6 حروف على الأقل.",errWrong:"الإيميل أو الباسورد غلط.",errExists:"فيه حساب بالإيميل ده أصلا.",hi:"دخلت باسم",outDone:"خرجت من الحساب",attPhoto:"صورة",attFile:"ملف",tooBig:"الملف أكبر من 8 ميجا.",invoiceTitle:"فاتورة",invSent:"الفاتورة اتبعتت على",invDate:"التاريخ",invBill:"الفاتورة لـ",invPkg:"الباقة",invExtras:"رومات / رولات / بوتات",invSub:"المجموع",invDisc:"الخصم (joehere)",invTotal:"الإجمالي المدفوع",invPay:"اتدفع بـ",invStatus:"الحالة",invPaid:"مدفوع",contentLine:"{r} روم و{ro} رول و{b} بوت جاهزين في سيرفرك.",revTitle:"آراء العملاء",revAvg:"المتوسط",chatHello:"أهلا، شكرا إنك فتحت التكت {id}. ده ملخص طلبك.",chatPickCoin:"اختار العملة اللي هتدفع بيها، وبعدين ابعت المبلغ بالظبط.",chatAck:"تمام، هنرد عليك هنا قريب.",chatPaidBot:"شكرا، بنراجع التحويل دلوقتي.",chatConfirmed:"الدفع اتأكد. الأوردر دخل الطابور.",chatDone:"السيرفر جاهز. شكرا إنك طلبت من joe.",chatSupFollow:"في حاجة تانية؟ اكتبها تحت وهنرد هنا.",chatCoinMe:"هدفع بـ",ownBack:"رجوع",newReply:"رسالة جديدة من joe",ch_community:"# ترحيب|# القوانين|# عام|# صوتي",ch_shop:"# المنتجات|# الطلبات|# التذاكر|# التقييمات",ch_store:"# الكتالوج|# الدفع|# الدعم|# الإعلانات",ch_upgrade:"# رومات-جديدة|# الرولات|# البوتات",ch_other:"# الريوارد|# الجيفواي|# السجلات",navUpgrade:"تطوير",navSupport:"الدعم",langBtn:"English",heroLead:"سيرفرات ديسكورد مخصصة حسب طلبك. الأسعار بالدولار، والدفع بالكريبتو بس.",heroCta:"ابدأ طلبك",heroNote:"كريبتو فقط",exLabel:"مثال على سعر",exName:"سيرفر كومينيتي، 12 روم، 6 رولات، 3 بوتات",createTitle:"إنشاء سيرفر",createSub:"اختار النوع، وبعدها حدد الرومات والرولات والبوتات اللي محتاجها. الإجمالي بيتحدث على طول.",upgradeTitle:"تطوير وسيرفرات أخرى",upgradeSub:"عدّل سيرفر عندك، أو اعمل سيرفر مخصص زي الريوارد.",from:"من",choose:"اختار",pkg_community:"سيرفر كومينيتي",pkg_shop:"باقة الشوب",pkg_store:"باقة الاستور",pkg_upgrade:"تطوير سيرفر",pkg_other:"سيرفرات أخرى",d_community:"إعداد جاهز لمجتمعك: قنوات ورولات ورسالة ترحيب.",d_shop:"قنوات منتجات وتذاكر وفلو طلبات لشوب صغير.",d_store:"تقسيم كامل للمتجر: كتالوج ودفع وقنوات دعم.",d_upgrade:"زوّد أو غيّر رومات ورولات وبوتات على سيرفر موجود.",d_other:"ريوارد وجيفواي وسيرفرات مخصصة.",rooms:"الرومات",roles:"الرولات",bots:"البوتات",notes:"ملاحظات لينا (اختياري)",base:"السعر الأساسي",total:"الإجمالي",openTicket:"افتح تكت شراء",supHead:"محتاج مساعدة؟",supSub2:"اختار السبب وهتاخد الإجابة على طول. لو لسه محتاج، ابعتلنا رسالة.",supBtn:"افتح تكت دعم",supTitle:"تحتاج مساعدة في إيه؟",supSub:"اختار السبب الأول، وهنعرضلك الإجابة.",r_pay:"الدفع",r_del:"تسليم السيرفر",r_price:"الأسعار",r_other:"حاجة تانية",a_pay:"ادفع الإجمالي بالدولار بالظبط بالعملة اللي اخترتها، وبعدين اضغط “دفعت”.",a_del:"السيرفر بيتسلم بعد تأكيد الدفع.",a_price:"الإجمالي = سعر الباقة + الرومات والرولات والبوتات اللي اخترتها. هتشوفه قبل ما تدفع.",a_other:"اكتب سؤالك تحت وهنرد عليك في التكت.",msgPh:"اكتب رسالة",send:"ابعت",st_open:"مفتوح",st_wait:"في انتظار الدفع",st_verify:"في انتظار التأكيد",st_done:"تم تأكيد الطلب",sendExact:"ابعت بالظبط",payWith:"بعملة",copy:"نسخ",copied:"اتنسخ",paid:"دفعت",ownTitle:"الإشعارات",ownEmpty:"مفيش تكتات لسه",confirm:"تأكيد",ownerLink:"صندوق المالك",foot:"© joe. الدفع بالكريبتو بس.",rateBtn:"تقييم",rateTitle:"عاملة إيه التجربة؟",rateSend:"ابعت",rated:"شكرا على التقييم",newTicket:"تكت شراء جديد",newOrder:"اتسجل الدفع. أوردر جديد",newSupport:"تكت دعم جديد",msgSent:"الرسالة اتبعتت للدعم",confirmed:"الأوردر اتأكد"}
+en:{navCreate:"Create",rateTicketTitle:"Rate your ticket",rateTicketNote:"This ticket is closed. Please rate your experience before you open another ticket.",rateThanks:"Thanks for rating us.",rateFirst:"Rate your closed ticket first.",rateNeed:"Pick a star rating first.",rateNotePh:"Tell us about your experience (optional)",st_closed:"Closed",lnkProfile:"Message the owner on Discord",lnkServer:"Join our Discord server",navAccounts:"Accounts",pathServer:"Discord server",pathServerSub:"Built to order, from channels to roles",pathAcc:"Discord accounts",pathAccSub:"Pick the year and how many you need",pathUp:"Upgrade or custom",pathUpSub:"Change a server you run, or build a custom one",accStep1:"Type",extrasLbl:"Add-ons, per item",accTierSingle:"Single (1 or 2)",accTierBulk:"Bulk (3 or more)",accYearsLbl:"Choose the year",accPickLbl:"Selected",accBuyThis:"Buy",plSingle:"Single price (1 or 2 accounts)",plBulk:"Bulk price (3 accounts or more)",accTitle:"Discord accounts for sale",accSub:"Pick the year and how many you need. The price updates as you go.",accRule:"Delivery: from 10 minutes up to 30 minutes after payment is confirmed.",accYearLbl:"Year created",accQtyLbl:"How many accounts",accUnitLbl:"Price per account",accTotalLbl:"Total",accEach:"each",accBulkNote:"3 or more accounts get the bulk price.",accBuy:"Buy now",pkg_account:"Discord accounts",liveOnly:"Available on the live site.",accDone:"{q} accounts from {y} delivered.",invEmail:"Your email for the invoice",yourEmail:"Your email",ticketClosed:"joe closed this ticket. Open a new one if you need more help.",ticketOpened:"joe reopened this ticket.",mailWarn:"Account created, but the welcome email failed",otpTitle:"Enter verification code",otpSub:"We emailed a 6-digit code to",otpVerify:"Verify",otpNoCode:"Didn't get the code?",otpResend:"Resend",otpBack:"Change email or password",otpNeed:"Enter all 6 digits.",myTickets:"My tickets",noTickets:"No tickets yet. Open one from a package or from support.",signInForTickets:"Sign in to see your tickets.",newsTitle:"Codes and news",newsSub:"Latest offers and updates from joe.",authTitleIn:"Sign in to your account",authTitleUp:"Create your account",errNoAcc:"No account with this email yet. Create one first.",uploadProof:"Upload transfer screenshot",proofNeed:"Send a screenshot of your transfer. We confirm the order after checking it.",chatProofBot:"Thanks. We are checking your transfer screenshot and will confirm here.",codeSent:"We sent a 6-digit code to your email.",verifyBtn:"Verify and create account",checkPay:"Check payment",codeLabel:"Verification code",notYet:"No payment seen yet. Transactions can take a few minutes after you send them.",netLabel:"Network",amtLabel:"Amount to send",copyAmt:"Copy amount",copyAddr:"Copy address",openWallet:"Open wallet",warnTitle:"Important",warnText:"Send only to this address and only on the {net} network. If you send to another address or another network, we are not responsible and the funds cannot be recovered.",ackText:"I understand. I will send only to this address, on this network.",policies:"Policies",walletHint:"If your wallet did not open, copy the amount and the address and paste them into your wallet.",payTitle:"Pay with crypto",paySub:"Choose the coin at checkout. Prices are always in USD.",code:"Discount code",apply:"Apply",codeOk:"10% off applied. It works on your first order.",codeUsed:"This code is only for your first order.",codeNeedLogin:"Sign in first to use this code.",codeBad:"This code is not valid.",discount:"Discount",login:"Sign in",authIn:"Sign in",authUp:"Create account",authSwitchUp:"New here? Create an account",authSwitchIn:"Already have an account? Sign in",authTitle:"Sign in to continue",authHint:"Invoices and order updates go to this email.",email:"Email",password:"Password",errEmail:"Enter a valid email.",errPass:"Password needs at least 6 characters.",errWrong:"Wrong email or password.",errExists:"An account with this email already exists.",hi:"Signed in as",outDone:"Signed out",attPhoto:"Photo",attFile:"File",tooBig:"File is larger than 8 MB.",invoiceTitle:"Invoice",invSent:"Invoice sent to",invDate:"Date",invBill:"Billed to",invPkg:"Package",invExtras:"Rooms / roles / bots",invSub:"Subtotal",invDisc:"Discount (joehere)",invTotal:"Total paid",invPay:"Paid with",invStatus:"Status",invPaid:"Paid",contentLine:"{r} rooms, {ro} roles and {b} bots are ready in your server.",revTitle:"What customers say",revAvg:"Average",chatHello:"Hi, thanks for opening ticket {id}. Here is your order summary.",chatPickCoin:"Pick the coin you want to pay with, then send the exact amount.",chatAck:"Got it. We will reply here shortly.",chatPaidBot:"Thanks. We are checking the transaction now.",chatConfirmed:"Payment confirmed. Your order is in the queue.",chatDone:"Your server is ready. Thanks for ordering with joe.",chatSupFollow:"Anything else? Write it below and we will reply here.",chatCoinMe:"Paying with",ownBack:"Back",newReply:"New message from joe",ch_community:"# welcome|# rules|# general|# voice",ch_shop:"# products|# orders|# tickets|# reviews",ch_store:"# catalogue|# checkout|# support|# announcements",ch_upgrade:"# new-rooms|# roles-setup|# bots",ch_other:"# rewards|# giveaways|# logs",navUpgrade:"Upgrade",navSupport:"Support",langBtn:"العربية",heroLead:"Discord servers built to order. Priced in USD, paid only in crypto.",heroCta:"Start an order",heroNote:"Crypto only",exLabel:"Example quote",exName:"Community server, 12 rooms, 6 roles, 3 bots",createTitle:"Create a server",createSub:"Pick a type, then choose the rooms, roles and bots you need. The total updates as you go.",upgradeTitle:"Upgrade & other servers",upgradeSub:"Change a server you already run, or build a custom one like rewards.",from:"From",choose:"Choose",pkg_community:"Community server",pkg_shop:"Shop package",pkg_store:"Store package",pkg_upgrade:"Upgrade a server",pkg_other:"Other servers",d_community:"A ready community setup with channels, roles and a welcome flow.",d_shop:"Product channels, ticketing and an order flow for a small shop.",d_store:"A full store layout with catalogue, checkout and support channels.",d_upgrade:"Add or change rooms, roles and bots on a server you already have.",d_other:"Rewards, giveaways and other custom servers.",rooms:"Rooms",roles:"Roles",bots:"Bots",notes:"Notes for us (optional)",base:"Base price",total:"Total",openTicket:"Open purchase ticket",supHead:"Need help?",supSub2:"Pick a reason and get the answer right away. Still stuck? Send us a message.",supBtn:"Open support",supTitle:"What do you need help with?",supSub:"Pick a reason first and we will show you the answer.",r_pay:"Payment",r_del:"Server delivery",r_price:"Pricing",r_other:"Something else",a_pay:"Pay the exact USD total in the coin you picked, then press “I have paid”.",a_del:"Your server is delivered once the payment is confirmed.",a_price:"Your total is the package price plus the rooms, roles and bots you chose. You see it before you pay.",a_other:"Write your question below and we will reply in this ticket.",msgPh:"Write a message",send:"Send",st_open:"Open",st_wait:"Awaiting payment",st_verify:"Waiting for confirmation",st_done:"Order confirmed",sendExact:"Send exactly",payWith:"in",copy:"Copy",copied:"Copied",paid:"I have paid",ownTitle:"Inbox",ownEmpty:"No tickets yet",confirm:"Confirm",ownerLink:"Owner inbox",foot:"© joe. Crypto payments only.",rateBtn:"Rate",rateTitle:"How was it?",rateSend:"Send",rated:"Thanks for your rating",newTicket:"New purchase ticket",newOrder:"Payment marked. New order",newSupport:"New support ticket",msgSent:"Message sent to support",confirmed:"Order confirmed"},
+ar:{navCreate:"إنشاء سيرفر",rateTicketTitle:"قيّم التكت",rateTicketNote:"التكت ده اتقفل. قيّم تجربتك قبل ما تفتح تكت جديد.",rateThanks:"شكرا على تقييمك.",rateFirst:"قيّم التكت المقفول الأول.",rateNeed:"اختار عدد النجوم الأول.",rateNotePh:"قولنا رأيك في التجربة (اختياري)",st_closed:"مقفول",lnkProfile:"كلّم المالك على ديسكورد",lnkServer:"انضم لسيرفر الديسكورد",navAccounts:"الحسابات",pathServer:"سيرفر ديسكورد",pathServerSub:"مبني حسب طلبك، من القنوات لحد الرولات",pathAcc:"حسابات ديسكورد",pathAccSub:"اختار السنة والعدد اللي محتاجه",pathUp:"تطوير أو مخصص",pathUpSub:"عدّل سيرفر عندك، أو اعمل سيرفر مخصص",accStep1:"النوع",extrasLbl:"الإضافات، لكل وحدة",accTierSingle:"فردي (حساب أو اتنين)",accTierBulk:"توريد (3 فأكتر)",accYearsLbl:"اختار سنة الإنشاء",accPickLbl:"اخترت",accBuyThis:"اشتري",plSingle:"أسعار الفردي (حساب أو اتنين)",plBulk:"أسعار التوريد (من 3 حسابات فأكتر)",accTitle:"حسابات ديسكورد للبيع",accSub:"اختار السنة وعدد الحسابات، والسعر بيتحدث على طول.",accRule:"التسليم بيكون في حدود من 10 دقايق لحد نص ساعة بعد تأكيد الدفع.",accYearLbl:"سنة الإنشاء",accQtyLbl:"عدد الحسابات",accUnitLbl:"سعر الحساب",accTotalLbl:"الإجمالي",accEach:"للحساب",accBulkNote:"من 3 حسابات فأكتر بيتحسب سعر التوريد.",accBuy:"اشتري دلوقتي",pkg_account:"حسابات ديسكورد",liveOnly:"متاح على الموقع الحقيقي.",accDone:"اتسلم {q} حساب من سنة {y}.",invEmail:"إيميلك عشان توصلك الفاتورة",yourEmail:"إيميلك",ticketClosed:"joe قفل التكت ده. لو محتاج مساعدة تاني افتح تكت جديد.",ticketOpened:"joe فتح التكت ده تاني.",mailWarn:"اتعمل الحساب، بس إيميل الترحيب ماتبعتش",otpTitle:"اكتب كود التحقق",otpSub:"بعتنالك كود من 6 أرقام على",otpVerify:"تأكيد",otpNoCode:"ماوصلكش الكود؟",otpResend:"ابعته تاني",otpBack:"غيّر الإيميل أو الباسورد",otpNeed:"اكتب الـ6 أرقام كلهم.",myTickets:"تكتاتي",noTickets:"مفيش تكتات لسه. افتح واحد من الباقات أو من الدعم.",signInForTickets:"سجل دخولك عشان تشوف تكتاتك.",newsTitle:"الأكواد والأخبار",newsSub:"آخر العروض والتحديثات من joe.",authTitleIn:"سجل دخولك لحسابك",authTitleUp:"اعمل حسابك الجديد",errNoAcc:"مفيش حساب بالإيميل ده لسه. اعمل حساب الأول.",uploadProof:"ارفع صورة التحويل",proofNeed:"ابعت صورة للتحويل. هنأكد الطلب بعد ما نراجعها.",chatProofBot:"شكرا، بنراجع صورة التحويل وهنأكد هنا.",codeSent:"بعتنالك كود من 6 أرقام على الإيميل.",verifyBtn:"أكد وأنشئ الحساب",checkPay:"تحقق من الدفع",codeLabel:"كود التحقق",notYet:"لسه مش لاقيين الدفع. التحويل ممكن ياخد دقايق بعد ما تبعته.",netLabel:"الشبكة",amtLabel:"المبلغ اللي تبعته",copyAmt:"انسخ المبلغ",copyAddr:"انسخ العنوان",openWallet:"افتح المحفظة",warnTitle:"مهم جدا",warnText:"ابعت على العنوان ده وعلى شبكة {net} بس. لو بعت على عنوان تاني أو شبكة تانية، إحنا مش مسؤولين، والفلوس مش هنقدر نسترجعها.",ackText:"فهمت، وهبعت على العنوان ده وعلى الشبكة دي بس.",policies:"السياسات",walletHint:"لو المحفظة ما فتحتش، انسخ المبلغ والعنوان وحطهم في المحفظة يدويا.",payTitle:"الدفع بالكريبتو",paySub:"اختار العملة وقت الدفع. الأسعار دايما بالدولار.",code:"كود الخصم",apply:"طبّق",codeOk:"الخصم 10% اتطبق، وصالح على أول طلب ليك.",codeUsed:"الكود ده لأول طلب بس.",codeNeedLogin:"سجل دخولك الأول عشان تستخدم الكود.",codeBad:"الكود ده مش صحيح.",discount:"الخصم",login:"تسجيل الدخول",authIn:"دخول",authUp:"إنشاء حساب",authSwitchUp:"أول مرة؟ اعمل حساب",authSwitchIn:"عندك حساب؟ ادخل",authTitle:"سجل دخولك عشان تكمل",authHint:"الفواتير وتحديثات الطلب هتروح على الإيميل ده.",email:"الإيميل",password:"الباسورد",errEmail:"اكتب إيميل صحيح.",errPass:"الباسورد لازم يكون 6 حروف على الأقل.",errWrong:"الإيميل أو الباسورد غلط.",errExists:"فيه حساب بالإيميل ده أصلا.",hi:"دخلت باسم",outDone:"خرجت من الحساب",attPhoto:"صورة",attFile:"ملف",tooBig:"الملف أكبر من 8 ميجا.",invoiceTitle:"فاتورة",invSent:"الفاتورة اتبعتت على",invDate:"التاريخ",invBill:"الفاتورة لـ",invPkg:"الباقة",invExtras:"رومات / رولات / بوتات",invSub:"المجموع",invDisc:"الخصم (joehere)",invTotal:"الإجمالي المدفوع",invPay:"اتدفع بـ",invStatus:"الحالة",invPaid:"مدفوع",contentLine:"{r} روم و{ro} رول و{b} بوت جاهزين في سيرفرك.",revTitle:"آراء العملاء",revAvg:"المتوسط",chatHello:"أهلا، شكرا إنك فتحت التكت {id}. ده ملخص طلبك.",chatPickCoin:"اختار العملة اللي هتدفع بيها، وبعدين ابعت المبلغ بالظبط.",chatAck:"تمام، هنرد عليك هنا قريب.",chatPaidBot:"شكرا، بنراجع التحويل دلوقتي.",chatConfirmed:"الدفع اتأكد. الأوردر دخل الطابور.",chatDone:"السيرفر جاهز. شكرا إنك طلبت من joe.",chatSupFollow:"في حاجة تانية؟ اكتبها تحت وهنرد هنا.",chatCoinMe:"هدفع بـ",ownBack:"رجوع",newReply:"رسالة جديدة من joe",ch_community:"# ترحيب|# القوانين|# عام|# صوتي",ch_shop:"# المنتجات|# الطلبات|# التذاكر|# التقييمات",ch_store:"# الكتالوج|# الدفع|# الدعم|# الإعلانات",ch_upgrade:"# رومات-جديدة|# الرولات|# البوتات",ch_other:"# الريوارد|# الجيفواي|# السجلات",navUpgrade:"تطوير",navSupport:"الدعم",langBtn:"English",heroLead:"سيرفرات ديسكورد مخصصة حسب طلبك. الأسعار بالدولار، والدفع بالكريبتو بس.",heroCta:"ابدأ طلبك",heroNote:"كريبتو فقط",exLabel:"مثال على سعر",exName:"سيرفر كومينيتي، 12 روم، 6 رولات، 3 بوتات",createTitle:"إنشاء سيرفر",createSub:"اختار النوع، وبعدها حدد الرومات والرولات والبوتات اللي محتاجها. الإجمالي بيتحدث على طول.",upgradeTitle:"تطوير وسيرفرات أخرى",upgradeSub:"عدّل سيرفر عندك، أو اعمل سيرفر مخصص زي الريوارد.",from:"من",choose:"اختار",pkg_community:"سيرفر كومينيتي",pkg_shop:"باقة الشوب",pkg_store:"باقة الاستور",pkg_upgrade:"تطوير سيرفر",pkg_other:"سيرفرات أخرى",d_community:"إعداد جاهز لمجتمعك: قنوات ورولات ورسالة ترحيب.",d_shop:"قنوات منتجات وتذاكر وفلو طلبات لشوب صغير.",d_store:"تقسيم كامل للمتجر: كتالوج ودفع وقنوات دعم.",d_upgrade:"زوّد أو غيّر رومات ورولات وبوتات على سيرفر موجود.",d_other:"ريوارد وجيفواي وسيرفرات مخصصة.",rooms:"الرومات",roles:"الرولات",bots:"البوتات",notes:"ملاحظات لينا (اختياري)",base:"السعر الأساسي",total:"الإجمالي",openTicket:"افتح تكت شراء",supHead:"محتاج مساعدة؟",supSub2:"اختار السبب وهتاخد الإجابة على طول. لو لسه محتاج، ابعتلنا رسالة.",supBtn:"افتح تكت دعم",supTitle:"تحتاج مساعدة في إيه؟",supSub:"اختار السبب الأول، وهنعرضلك الإجابة.",r_pay:"الدفع",r_del:"تسليم السيرفر",r_price:"الأسعار",r_other:"حاجة تانية",a_pay:"ادفع الإجمالي بالدولار بالظبط بالعملة اللي اخترتها، وبعدين اضغط “دفعت”.",a_del:"السيرفر بيتسلم بعد تأكيد الدفع.",a_price:"الإجمالي = سعر الباقة + الرومات والرولات والبوتات اللي اخترتها. هتشوفه قبل ما تدفع.",a_other:"اكتب سؤالك تحت وهنرد عليك في التكت.",msgPh:"اكتب رسالة",send:"ابعت",st_open:"مفتوح",st_wait:"في انتظار الدفع",st_verify:"في انتظار التأكيد",st_done:"تم تأكيد الطلب",sendExact:"ابعت بالظبط",payWith:"بعملة",copy:"نسخ",copied:"اتنسخ",paid:"دفعت",ownTitle:"الإشعارات",ownEmpty:"مفيش تكتات لسه",confirm:"تأكيد",ownerLink:"صندوق المالك",foot:"© joe. الدفع بالكريبتو بس.",rateBtn:"تقييم",rateTitle:"عاملة إيه التجربة؟",rateSend:"ابعت",rated:"شكرا على التقييم",newTicket:"تكت شراء جديد",newOrder:"اتسجل الدفع. أوردر جديد",newSupport:"تكت دعم جديد",msgSent:"الرسالة اتبعتت للدعم",confirmed:"الأوردر اتأكد"}
 };
 
 const t=k=>L[S.lang][k]??L.en[k]??k;
@@ -538,7 +586,7 @@ const payHTML=tk=>{
 function bubble(tk,m,who){
   let inner;
   if(m.kind==="sum")inner=`<div class="sumcard"><b class="serif">${t("pkg_"+tk.pkg)}</b>`+
-    (tk.pkg==="account"?rowHTML(t("accYear"),tk.c.year)+rowHTML(t("accQty"),tk.c.qty):rowHTML(t("rooms"),tk.c.rooms)+rowHTML(t("roles"),tk.c.roles)+rowHTML(t("bots"),tk.c.bots))+
+    (tk.pkg==="account"?rowHTML(t("accYearLbl"),tk.c.year)+rowHTML(t("accQtyLbl"),tk.c.qty):rowHTML(t("rooms"),tk.c.rooms)+rowHTML(t("roles"),tk.c.roles)+rowHTML(t("bots"),tk.c.bots))+
     (tk.pct?rowHTML(t("discount"),"−"+money(tk.sub-tk.total)):"")+rowHTML(t("total"),money(tk.total))+`</div>`;
   else if(m.kind==="pay")inner=who==="me"&&tk.status==="wait"?payHTML(tk):`${t("amtLabel")} <b>${payOf(tk).amount} ${tk.coin}</b>`;
   else if(m.kind==="inv"){
@@ -555,7 +603,7 @@ function bubble(tk,m,who){
 }
 const bubbles=(tk,who)=>tk.msgs.map(m=>bubble(tk,m,who)).join("")+
   (tk.typing&&who==="me"?`<div class="mrow"><div class="bub typing"><i></i><i></i><i></i></div></div>`:"");
-const headOf=tk=>`<div class="chead"><div class="av">j</div><div><b>joe</b><small>${t(tk.type==="support"?"st_open":"st_"+tk.status)}</small></div></div>`;
+const headOf=tk=>`<div class="chead"><div class="av">j</div><div><b>joe</b><small>${t(tk.tstatus==="closed"?"st_closed":tk.type==="support"?"st_open":"st_"+tk.status)}</small></div></div>`;
 // repaint without losing what the person is typing
 function keep(sel,fn){
   const el=$(sel),v=el?el.value:"",f=!!el&&document.activeElement===el;
@@ -563,16 +611,44 @@ function keep(sel,fn){
   const n=$(sel);
   if(n){n.value=v;if(f)n.focus()}
 }
+function closedBox(tk){
+  if(tk.rated)return `<div class="glass rate-box"><div class="stars-s">${"★".repeat(tk.rating||0)}${"☆".repeat(5-(tk.rating||0))}</div><p class="ask">${t("rateThanks")}</p></div>`;
+  const pick=tk.rateTmp||0;
+  return `<div class="glass rate-box"><b class="serif">${t("rateTicketTitle")}</b><p class="ask">${t("rateTicketNote")}</p>`+
+    `<div class="stars">${[1,2,3,4,5].map(i=>`<button data-rs="${i}" class="${i<=pick?"on":""}" aria-label="${i}">★</button>`).join("")}</div>`+
+    `<textarea id="rnote" rows="2" placeholder="${t("rateNotePh")}"></textarea>`+
+    `<button class="gbtn dark full" data-act="ratesend">${t("rateSend")}</button></div>`;
+}
+function composerHTML(staged){
+  return `<div class="comp-wrap"><div class="staged">${staged}</div><div class="comp"><button class="gbtn sm" data-att="img">${t("attPhoto")}</button><button class="gbtn sm" data-att="file">${t("attFile")}</button><textarea id="pdraft" rows="1" placeholder="${t("msgPh")}"></textarea><button class="gbtn dark sm" data-act="send">${t("send")}</button></div></div>`;
+}
 function paintPanel(){
   const tk=S.act,p=$("#panel");
   if(!tk){p.innerHTML="";return}
   const staged=S.staged.map((f,i)=>`<span class="sg">${f.url?`<img src="${f.url}" alt="">`:""}${esc(f.name)}<button data-unstage="${i}" aria-label="remove">×</button></span>`).join("");
+  const rn=$("#rnote")?$("#rnote").value:undefined;
   keep("#pdraft",()=>{p.innerHTML=
     `<div class="row" style="justify-content:space-between"><span class="stat">${tk.id}</span><button class="gbtn sm" data-hide aria-label="Close">✕</button></div>`+
     headOf(tk)+`<div class="msgs" id="pmsgs">${bubbles(tk,"me")}</div>`+
-    `<div class="comp-wrap"><div class="staged">${staged}</div><div class="comp"><button class="gbtn sm" data-att="img">${t("attPhoto")}</button><button class="gbtn sm" data-att="file">${t("attFile")}</button><textarea id="pdraft" rows="1" placeholder="${t("msgPh")}"></textarea><button class="gbtn dark sm" data-act="send">${t("send")}</button></div></div>`;
+    (tk.tstatus==="closed"?closedBox(tk):composerHTML(staged));
   });
+  if(rn!==undefined&&$("#rnote"))$("#rnote").value=rn;
   const m=$("#pmsgs");if(m)m.scrollTop=m.scrollHeight;
+}
+// a closed ticket must be rated before the customer opens another one
+function pendingRate(){return S.tickets.find(x=>x.tid&&x.tstatus==="closed"&&!x.rated)}
+function blockByRating(){
+  const p=pendingRate();if(!p)return false;
+  $("#cfg").close();S.act=p;show("panel");paintPanel();toast(t("rateFirst"));return true;
+}
+async function submitRate(tk){
+  const stars=tk.rateTmp||0;
+  if(!stars){toast(t("rateNeed"));return}
+  const text=$("#rnote")?$("#rnote").value.trim():"";
+  try{
+    await api("/tickets?id="+tk.tid+"&action=rate",{token:tk.ttoken,stars,text});
+    tk.rated=true;tk.rating=stars;toast(t("rateThanks"));refresh();
+  }catch(e){toast(e.message)}
 }
 function paintOwner(){
   const o=$("#owner"),tk=S.tickets.find(x=>x.id===S.own);
@@ -603,6 +679,7 @@ function paintReviews(){
   $$(".revs").forEach(el=>el.innerHTML=`<div class="rhead"><h3>${t("revTitle")}</h3><span class="stat">${t("revAvg")} ${avg} ★</span></div><div class="rmask"><div class="rtrack">${cards}${cards}</div></div>`);
 }
 function buy(){
+  if(blockByRating())return;
   const email=buyEmail();if(!email)return;
   const sub=+total().toFixed(2),pct=S.disc?S.disc:0;
   const tk={id:"JOE-"+(++S.seq),type:"purchase",email,pkg:S.pkg,c:{...S.c},sub,pct,total:+(sub*(1-pct)).toFixed(2),status:"wait",coin:"BTC",msgs:[],typing:false};
@@ -618,7 +695,7 @@ function buy(){
 function openSupport(r,email){
   const tk={id:"SUP-"+(++S.seq),type:"support",reason:r,email,msgs:[],typing:false};
   S.tickets.unshift(tk);S.act=tk;
-  $("#sup").close();if(LIVE)api("/tickets",{type:"support",reason:r,email}).then(x=>{tk.tid=x.id;tk.ttoken=x.access;startPoll(tk)}).catch(()=>{});$("#panel").innerHTML="";show("panel");
+  $("#sup").close();if(LIVE)api("/tickets",{type:"support",reason:r,email,lang:S.lang}).then(x=>{tk.tid=x.id;tk.ttoken=x.access;startPoll(tk)}).catch(()=>{});$("#panel").innerHTML="";show("panel");
   notify(t("newSupport")+" "+tk.id);
   seq(tk,[{m:{f:"joe",text:t("a_"+r)},d:800},{m:{f:"joe",text:t("chatSupFollow")},d:700}]);
 }
@@ -717,6 +794,7 @@ async function resendOtp(){
   catch(e){$("#otpErr").textContent=e.message}
 }
 async function buyLive(){
+  if(blockByRating())return;
   const notes=$("#notes").value.trim(),code=$("#code").value.trim(),email=buyEmail();if(!email)return;
   const tk={id:"",type:"purchase",pkg:S.pkg,c:{...S.c},status:"wait",coin:"BTC",msgs:[],typing:true,live:true,email};
   S.tickets.unshift(tk);S.act=tk;
@@ -724,7 +802,7 @@ async function buyLive(){
   try{
     const o=await api("/orders",{pkg:tk.pkg,c:tk.c,coin:tk.coin,notes,code,email});
     Object.assign(tk,{id:o.ref,oid:o.id,sub:o.sub,pct:o.pct,total:o.usd,pay:o.pay,token:o.token});
-    api("/tickets",{type:"purchase",orderId:o.id,token:o.token}).then(x=>{tk.tid=x.id;tk.ttoken=x.access;startPoll(tk)}).catch(()=>{});
+    api("/tickets",{type:"purchase",orderId:o.id,token:o.token,lang:S.lang}).then(x=>{tk.tid=x.id;tk.ttoken=x.access;startPoll(tk)}).catch(()=>{});
     S.disc=0;$("#code").value="";$("#codeMsg").textContent="";
     if(notes)tk.msgs.push({f:"me",text:notes});
     tk.typing=false;
@@ -788,14 +866,14 @@ function saveTickets(){
 const cashOf=v=>v==null?"…":money(v);
 const EMAIL_OK=e=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
 function buyEmail(){const e=$("#buyEmail").value.trim();if(!EMAIL_OK(e)){$("#buyErr").textContent=t("errEmail");return null}$("#buyErr").textContent="";return e}
-function supportReason(r){const e=$("#supEmail").value.trim();if(!EMAIL_OK(e)){$("#supErr").textContent=t("errEmail");return}$("#supErr").textContent="";openSupport(r,e)}
+function supportReason(r){if(blockByRating())return;const e=$("#supEmail").value.trim();if(!EMAIL_OK(e)){$("#supErr").textContent=t("errEmail");return}$("#supErr").textContent="";openSupport(r,e)}
 // prices come from the owner's settings (live mode only)
 async function loadPricing(){
   try{
     const P=await (await fetch("/api/settings")).json();
     Object.assign(PK,P.base);Object.assign(RATE,P.units);
     for(const c in P.rates)if(WALLET[c])WALLET[c].rate=P.rates[c];
-    S.pricing=P;paintCfg();paintAccounts();
+    S.pricing=P;paintCfg();paintAccounts();paintCards();applyLinks(P.links);
   }catch(e){}
 }
 // the page checks the server for the owner's replies and close/reopen changes
@@ -816,6 +894,7 @@ async function pollTicket(tk){
     }
     if(r.status==="closed"&&!tk.closedNoted){tk.closedNoted=true;tk.msgs.push({f:"joe",text:t("ticketClosed")});added=true}
     if(r.status!=="closed"&&tk.closedNoted){tk.closedNoted=false;tk.msgs.push({f:"joe",text:t("ticketOpened")});added=true}
+    if(r.status!==tk.tstatus||!!r.rating!==!!tk.rated){tk.tstatus=r.status;tk.rated=!!r.rating;tk.rating=r.rating||0;added=true}
     if(added)refresh();
   }catch(e){}
 }
@@ -824,21 +903,26 @@ S.accQty=S.accQty||1;
 const accList=()=>(S.pricing&&S.pricing.accounts)||ACC_DEFAULT;
 function paintAccounts(){
   const list=accList();
-  if(!list.some(r=>r.y===S.accYear))S.accYear=(list[0]||{}).y;
+  if(!list.some(r=>r.y===S.accYear&&!r.out))S.accYear=((list.find(r=>!r.out))||list[0]||{}).y;
   S.accTier=S.accTier||"single";
   if(S.accTier==="bulk"&&S.accQty<3)S.accQty=3;
   if(S.accTier!=="bulk"&&S.accQty>2)S.accQty=2;
   const row=list.find(r=>r.y===S.accYear)||list[0], q=S.accQty, bulk=S.accTier==="bulk";
   const unit=bulk?row.bulk:row.single;
-  $("#accYears").innerHTML=list.map(r=>`<button class="yr ${r.y===S.accYear?"on":""}" data-yr="${esc(r.y)}"><b>${esc(r.y)}</b></button>`).join("");
+  $("#accYears").innerHTML=list.map(r=>`<button class="yr ${r.y===S.accYear?"on":""}${r.out?" out":""}" data-yr="${esc(r.y)}"${r.out?" disabled":""}><b>${esc(r.y)}</b>${r.out?"<small class=\"oos\">OUT OF STOCK</small>":""}</button>`).join("");
   document.querySelectorAll(".tier").forEach(x=>x.classList.toggle("on",x.dataset.acctier===S.accTier));
   $("#accPick").textContent=t("accPickLbl")+": "+row.y+" · "+(bulk?t("accTierBulk"):t("accTierSingle"))+" · "+q;
   $("#accQty").textContent=q;
   $("#accUnit").textContent=money(unit)+" / "+t("accEach");
   $("#accTotal").textContent=money(unit*q);
   $("#accBulk").hidden=!bulk;
+  $("#accBuy").disabled=!!row.out;
+  $("#abarTot").textContent=money(unit*q);
+  const avail=list.filter(r=>!r.out);
+  $$("[data-accfrom]").forEach(e=>e.textContent=money(avail.length?Math.min(...avail.map(r=>r.single)):0));
 }
 async function buyAccount(){
+  if(blockByRating())return;
   const email=$("#accEmail").value.trim();
   if(!EMAIL_OK(email)){$("#accErr").textContent=t("errEmail");return}
   $("#accErr").textContent="";
@@ -849,10 +933,19 @@ async function buyAccount(){
     const o=await api("/orders",{kind:"account",year,qty,tier,coin:tk.coin,email});
     Object.assign(tk,{id:o.ref,oid:o.id,sub:o.sub,pct:o.pct,total:o.usd,pay:o.pay,token:o.token});
     tk.typing=false;
-    api("/tickets",{type:"purchase",orderId:o.id,token:o.token}).then(x=>{tk.tid=x.id;tk.ttoken=x.access;startPoll(tk)}).catch(()=>{});
+    api("/tickets",{type:"purchase",orderId:o.id,token:o.token,lang:S.lang}).then(x=>{tk.tid=x.id;tk.ttoken=x.access;startPoll(tk)}).catch(()=>{});
     seq(tk,[{m:{f:"joe",text:t("chatHello").replace("{id}",tk.id)},d:500},{m:{f:"joe",kind:"sum"},d:800},{m:{f:"joe",text:t("chatPickCoin")},d:900},{m:{f:"joe",kind:"pay"},d:900}]);
     tk.timer=setInterval(()=>checkLive(tk),20000);
   }catch(e){tk.typing=false;tk.msgs.push({f:"joe",text:e.message});refresh()}
+}
+function paintCards(){
+  $$("[data-base]").forEach(e=>e.textContent=money(PK[e.dataset.base]));
+  $$("[data-extras]").forEach(e=>e.innerHTML=`<span class="lbl">${t("extrasLbl")}</span>`+["rooms","roles","bots"].map(k=>`<span>${t(k)} <b>${money(RATE[k])}</b></span>`).join(""));
+}
+function applyLinks(L){
+  if(!L)return;
+  if(L.profile)$("#lnkProfile").href=L.profile;
+  const srv=$("#lnkServer");srv.hidden=!L.server;if(L.server)srv.href=L.server;
 }
 function apply(){
   document.documentElement.lang=S.lang;
@@ -862,7 +955,7 @@ function apply(){
   $("#notes").placeholder=t("notes");
   $("#code").placeholder=t("code");
   $("#buyEmail").placeholder=t("invEmail");$("#supEmail").placeholder=t("yourEmail");$("#accEmail").placeholder=t("invEmail");paintAccounts();paintAcct();paintAuth();paintReviews();paintPolicy();paintNews();
-  paintCfg();refresh();
+  paintCfg();paintCards();refresh();
 }
 
 document.addEventListener("click",e=>{
@@ -881,6 +974,8 @@ document.addEventListener("click",e=>{
   else if(d.act==="copyAmt")copyText(payOf(S.act).amount);
   else if(d.act==="copyAddr")copyText(payOf(S.act).addr);
   else if(d.act==="wallet")openWallet(S.act);
+  else if(d.rs!==undefined){S.act.rateTmp=+d.rs;paintPanel()}
+  else if(d.act==="ratesend"){submitRate(S.act)}
   else if(d.act==="paid"){if(S.act.ack&&S.act.proof){if(S.act.live)sendProofLive(S.act);else payMe(S.act)}}
   else if(d.act==="send"){const v=$("#pdraft").value.trim();if(v||S.staged.length){$("#pdraft").value="";sendMe(S.act,v,S.staged.splice(0))}}
   else if(d.att)$(d.att==="img"?"#fImg":"#fFile").click();
@@ -898,6 +993,7 @@ document.addEventListener("click",e=>{
   else if(d.yr!==undefined){S.accYear=d.yr;paintAccounts()}
   else if(d.accq!==undefined){const bulk=S.accTier==="bulk";S.accQty=Math.max(bulk?3:1,Math.min(bulk?50:2,S.accQty+ +d.accq));paintAccounts()}
   else if(d.acctier!==undefined){S.accTier=d.acctier;paintAccounts()}
+  else if(b.id==="abarBuy"){const e=$("#accEmail");if(!EMAIL_OK(e.value.trim())){$("#accBox").scrollIntoView({behavior:"smooth",block:"center"});setTimeout(()=>e.focus(),400);$("#accErr").textContent=t("errEmail")}else $("#accBuy").click()}
   else if(b.id==="accBuy"){if(LIVE)buyAccount();else toast(t("liveOnly"))}
   else if(d.owner!==undefined){show("owner");paintOwner()}
   else if(b.id==="acct"){if(S.user){setSession(null);toast(t("outDone"))}else openAuth()}
@@ -958,6 +1054,13 @@ document.addEventListener("paste",e=>{
   $$(".otp-in").forEach((el,i)=>el.value=d[i]||"");
   if(d.length===6)verifyOtp();
 });
+// the total bar shows while the account picker is on screen, and hides once the Buy button is visible
+const abar=$("#abar");let inSec=false,inBuy=false;
+const syncBar=()=>abar&&abar.classList.toggle("on",inSec&&!inBuy);
+if(abar&&"IntersectionObserver" in window){
+  new IntersectionObserver(([x])=>{inSec=x.isIntersecting;syncBar()}).observe($("#accounts"));
+  new IntersectionObserver(([x])=>{inBuy=x.isIntersecting;syncBar()}).observe($("#accBuy"));
+}
 apply();
 </script>
 </body>
