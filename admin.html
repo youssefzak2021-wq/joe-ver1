@@ -1,91 +1,206 @@
 <!doctype html>
 <html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>joe · owner</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
+:root{--bg:#070707;--fg:#f4f4f4;--mute:rgba(244,244,244,.56);--line:rgba(255,255,255,.12);--glass:rgba(255,255,255,.055);--ink:#070707}
 *{box-sizing:border-box}
-body{margin:0;font-family:system-ui,"Segoe UI",Tahoma,sans-serif;background:#efe9d6;color:#2b2820;font-size:15px}
-header{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:14px 20px;background:#2b2820;color:#f4efdf}
-header h1{margin:0;font-size:22px;font-family:Georgia,serif;font-weight:500}
-header input{padding:8px 10px;border-radius:8px;border:0;min-width:220px}
-button{font:inherit;padding:8px 14px;border-radius:9px;border:0;background:#2b2820;color:#f4efdf;cursor:pointer}
-button.ghost{background:#ddd5c1;color:#2b2820}
-nav{display:flex;gap:6px;padding:10px 20px;background:#e4dcc6;flex-wrap:wrap}
-nav button{background:transparent;color:#2b2820}
-nav button.on{background:#2b2820;color:#f4efdf}
-main{padding:18px 20px;max-width:1200px}
+html,body{margin:0}
+body{font-family:Tajawal,system-ui,"Segoe UI",Tahoma,sans-serif;background:radial-gradient(120% 60% at 50% -10%,#1d1d1d 0%,var(--bg) 60%) fixed,var(--bg);color:var(--fg);font-size:15px;min-height:100vh}
+header{position:sticky;top:0;z-index:20;display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:12px 18px;background:rgba(12,12,12,.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+header h1{margin:0;font-family:Fraunces,serif;font-weight:600;font-size:22px;letter-spacing:-.03em}
+header input{padding:9px 12px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--fg);min-width:200px;font:inherit}
+#msg{font-size:14px;color:var(--mute)}
+nav.tabs{display:flex;gap:6px;padding:10px 18px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+nav.tabs button{border:1px solid transparent;background:transparent;color:var(--mute);font:inherit;font-weight:700;padding:8px 14px;border-radius:999px;cursor:pointer}
+nav.tabs button.on{background:#fff;color:var(--ink)}
+main{padding:18px;max-width:1280px;margin:0 auto}
 section{display:none}
 section.on{display:block}
-.card{background:#fbf9f1;border-radius:14px;padding:14px;margin:10px 0;box-shadow:0 2px 10px rgba(0,0,0,.07)}
-.split{display:grid;grid-template-columns:320px 1fr;gap:16px}
-@media(max-width:800px){.split{grid-template-columns:1fr}}
-.item{display:block;width:100%;text-align:start;background:#fbf9f1;color:#2b2820;margin:6px 0;border:1px solid #d6cdb4}
-.item.on{border-color:#2b2820}
-.tag{display:inline-block;padding:2px 9px;border-radius:999px;background:#ddd5c1;font-size:12px;margin-inline-end:4px}
+h3{font-family:Fraunces,serif;font-weight:600;margin:4px 0 10px;font-size:19px}
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;padding:0 16px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.04));color:var(--fg);font:inherit;font-weight:700;cursor:pointer;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:inset 0 1px 0 rgba(255,255,255,.3);transition:transform .2s,background .2s}
+.btn:hover{transform:translateY(-1px);background:linear-gradient(180deg,rgba(255,255,255,.26),rgba(255,255,255,.08))}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btn.sm{min-height:34px;padding:0 13px;font-size:13px}
+.btn.dark{background:linear-gradient(180deg,#fff,#dcdcdc);color:var(--ink);border-color:transparent}
+.btn.ghost{background:rgba(255,255,255,.05)}
+.btn.danger{background:rgba(255,80,80,.12);border-color:rgba(255,120,120,.4);color:#ffb3b3}
+.card{background:var(--glass);border:1px solid var(--line);border-radius:20px;padding:16px;margin:10px 0;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.muted{color:var(--mute);font-size:13px}
+.mono{font-family:ui-monospace,Menlo,monospace;font-size:12px;word-break:break-all;direction:ltr}
+.grow{flex:1}
 .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.msgs{display:flex;flex-direction:column;gap:8px;max-height:50vh;overflow:auto;padding:6px}
-.msg{max-width:78%;padding:9px 12px;border-radius:14px;background:#fff;white-space:pre-wrap;align-self:flex-start}
-.msg.mine{align-self:flex-end;background:#2b2820;color:#f4efdf}
-.msg img{display:block;max-width:220px;border-radius:8px;margin-top:6px}
-.msg small{display:block;opacity:.6;font-size:11px;margin-top:4px}
-textarea,input[type=number],input[type=text],input[type=password]{font:inherit;padding:8px 10px;border-radius:9px;border:1px solid #b7af98;background:#fff;width:100%}
+.pill{display:inline-block;padding:3px 10px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid var(--line);font-size:12px;font-weight:700;white-space:nowrap}
+.pill.ok{background:rgba(180,255,210,.14);border-color:rgba(180,255,210,.35)}
+.pill.warn{background:rgba(255,220,130,.14);border-color:rgba(255,220,130,.35)}
+.kind{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:700;background:#fff;color:var(--ink);white-space:nowrap}
+.kind.support{background:rgba(255,255,255,.15);color:var(--fg)}
+.gold{color:#fff;letter-spacing:2px;font-size:13px}
+.dim{opacity:.25}
+.empty{color:var(--mute);text-align:center;padding:40px 10px}
+.empty.big{padding:140px 10px;font-size:17px}
+.center{text-align:center}
+.twrap{display:grid;grid-template-columns:340px 1fr;gap:18px;align-items:start}
+.tside{position:sticky;top:90px;display:grid;gap:10px}
+.seg{display:flex;gap:4px;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:999px;padding:4px}
+.seg button{flex:1;border:0;background:transparent;color:var(--mute);font:inherit;font-weight:700;padding:8px 6px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.seg button.on{background:#fff;color:var(--ink)}
+.seg i{font-style:normal;opacity:.6;margin-inline-start:4px}
+.search{width:100%;padding:11px 14px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--fg);font:inherit}
+.tlist{display:grid;gap:8px;max-height:74vh;overflow:auto;padding-inline-end:4px}
+.tcard{display:grid;gap:4px;text-align:start;width:100%;padding:12px 14px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--fg);font:inherit;cursor:pointer;transition:background .2s,transform .2s}
+.tcard:hover{background:rgba(255,255,255,.09);transform:translateY(-1px)}
+.tcard.on{border-color:rgba(255,255,255,.7);background:rgba(255,255,255,.12)}
+.tc-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.tc-top b{font-size:14px}
+.tc-top small{color:var(--mute);margin-inline-start:auto}
+.tc-mail{font-size:13px;color:var(--mute);direction:ltr;text-align:start;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tc-prev{font-size:13px;color:var(--mute);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tview{min-width:0;display:grid;gap:12px}
+.vhead{padding:16px 18px;border-radius:22px;background:var(--glass);border:1px solid var(--line);display:grid;gap:10px}
+.vtop{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.vtitle{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.vtitle h2{margin:0;font-family:Fraunces,serif;font-size:24px;font-weight:600;letter-spacing:-.02em}
+.vmeta{display:flex;gap:12px;align-items:center;flex-wrap:wrap;color:var(--mute);font-size:13px}
+.link{background:none;border:0;color:var(--fg);cursor:pointer;text-decoration:underline;text-underline-offset:3px;font:inherit;direction:ltr;padding:0}
+.vactions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.rated{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.rated q{color:var(--mute)}
+.ordcard{padding:14px 16px;border-radius:20px;background:var(--glass);border:1px solid var(--line);display:grid;gap:10px}
+.orow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.amt{font-family:Fraunces,serif;font-size:20px;font-weight:600}
+.proofthumb{display:flex;gap:8px;align-items:center;text-decoration:none;color:var(--fg);font-size:13px}
+.proofthumb img{width:52px;height:52px;object-fit:cover;border-radius:12px;border:1px solid var(--line)}
+.chatbox{border-radius:24px;background:rgba(255,255,255,.03);border:1px solid var(--line);padding:14px}
+.chat{display:flex;flex-direction:column;gap:10px;max-height:56vh;min-height:260px;overflow-y:auto;padding:4px}
+.mrow{display:flex}
+.bub{max-width:82%;padding:11px 14px;border-radius:20px;border-end-start-radius:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.12);font-size:15px;line-height:1.5;white-space:pre-wrap;word-break:break-word}
+.bub img{display:block;max-width:240px;border-radius:14px;margin-top:6px}
+.mine .bub{margin-inline-start:auto;background:#fff;color:var(--ink);border-color:transparent;border-end-start-radius:20px;border-end-end-radius:6px}
+.sumcard{display:grid;gap:2px;min-width:230px}
+.sumcard b.serif{font-family:Fraunces,serif;font-size:21px;margin-bottom:6px}
+.rowk{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:14px}
+.rowk span{color:var(--mute)}
+.paybox{display:grid;gap:8px;min-width:240px}
+.kv{display:flex;justify-content:space-between;gap:10px;font-size:14px;color:var(--mute)}
+.kv b{color:var(--fg)}
+.code{font-family:ui-monospace,Menlo,monospace;font-size:12px;word-break:break-all;background:rgba(255,255,255,.06);border:1px solid var(--line);padding:10px;border-radius:12px;direction:ltr}
+.warn{padding:10px 12px;border-radius:14px;border:1px dashed rgba(255,255,255,.35);font-size:13px;line-height:1.5}
+.warn b{display:block;margin-bottom:3px}
+.warn p{margin:0;color:var(--mute)}
+.cont{font-size:13px;color:var(--mute);line-height:1.5;margin:6px 0 0}
+.composer{padding:12px;border-radius:24px;background:var(--glass);border:1px solid var(--line);display:grid;gap:10px}
+.composer textarea{width:100%;padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--fg);font:inherit;resize:vertical;min-height:72px}
+.crow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.staged{display:flex;flex-wrap:wrap;gap:6px}
+.staged:empty{display:none}
+.chipimg{display:inline-flex;align-items:center;gap:6px;padding:4px 6px 4px 4px;border-radius:12px;background:rgba(255,255,255,.12);font-size:12px}
+.chipimg img{width:30px;height:30px;object-fit:cover;border-radius:8px}
+.chipimg button{border:0;background:none;color:var(--fg);cursor:pointer;font-size:15px}
+label.btn input{display:none}
+label{display:grid;gap:5px;font-size:13px;color:var(--mute)}
+input[type=number],input[type=text],input[type=password],input[type=url]{padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--fg);font:inherit;width:100%}
 .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
-label{display:grid;gap:4px;font-size:13px;color:#5e574b}
-.muted{color:#7a7266;font-size:13px}
-.mono{font-family:ui-monospace,monospace;font-size:12px;word-break:break-all}
-img.proof{width:160px;border-radius:10px;border:1px solid #b7af98}
-#msg{color:#f4efdf;font-size:14px}
+.accrow{margin-bottom:10px;padding:10px;border-radius:16px;border:1px solid transparent;transition:opacity .2s,border-color .2s}
+.accrow.is-out{opacity:.6;border-color:rgba(255,120,120,.45);background:rgba(255,80,80,.06)}
+.oosbox{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.oos-toggle{display:flex;align-items:center;gap:8px;cursor:pointer}
+.oos-toggle input{width:18px;height:18px;accent-color:#fff;margin:0}
+.oos-toggle span{font-weight:700;color:var(--fg);letter-spacing:.04em}
+#msg:empty{display:none}
+@media(max-width:900px){.twrap{grid-template-columns:1fr}.tside{position:static}.bub{max-width:94%}}
 </style></head><body>
-<header><h1>joe · owner</h1><input id="key" type="password" placeholder="كلمة سر الأدمن"><button id="open">دخول</button><span id="msg"></span></header>
-<nav>
-<button data-tab="tickets" class="on">التكتات</button>
-<button data-tab="orders">الطلبات</button>
-<button data-tab="prices">الأسعار والأكواد</button>
-<button data-tab="news">الأخبار</button>
+<header><h1>joe · owner</h1><input id="key" type="password" placeholder="كلمة سر الأدمن"><button class="btn dark" id="open">دخول</button><span id="msg"></span></header>
+<nav class="tabs">
+  <button data-tab="tickets" class="on">التكتات</button>
+  <button data-tab="orders">الطلبات</button>
+  <button data-tab="prices">الأسعار والأكواد</button>
+  <button data-tab="links">الروابط</button>
+  <button data-tab="news">الأخبار</button>
 </nav>
 <main>
-<section id="tab-tickets" class="on">
-  <div class="split">
-    <div>
-      <div class="row" style="margin-bottom:8px"><button class="ghost" id="filterOpen">المفتوحة</button><button class="ghost" id="filterAll">الكل</button></div><input id="tsearch" type="text" placeholder="بحث بالإيميل أو الرقم" style="margin-bottom:8px">
-      <div id="tlist"></div>
+  <section id="tab-tickets" class="on">
+    <div class="twrap">
+      <aside class="tside">
+        <div class="seg" id="seg">
+          <button data-filter="open">المفتوحة <i>0</i></button>
+          <button data-filter="closed">المقفولة <i>0</i></button>
+          <button data-filter="all">الكل <i>0</i></button>
+        </div>
+        <input id="tsearch" class="search" placeholder="بحث بالإيميل أو السبب أو الرقم">
+        <div id="tlist" class="tlist"></div>
+      </aside>
+      <div id="tview" class="tview"><div class="empty big">اختار تكت من القايمة</div></div>
     </div>
-    <div id="tview"><p class="muted">اختار تكت من القايمة.</p></div>
-  </div>
-</section>
-<section id="tab-orders"><input id="osearch" type="text" placeholder="بحث بالإيميل أو رقم الطلب" style="margin-bottom:10px"><div id="orders"></div></section>
-<section id="tab-prices">
-  <div class="card"><h3>الباقات (بالدولار)</h3><div class="grid2" id="fBase"></div></div>
-  <div class="card"><h3>الرومات والرولات والبوتات (بالدولار للوحدة)</h3><div class="grid2" id="fUnits"></div></div>
-  <div class="card"><h3>أسعار العملات (بالدولار لكل عملة)</h3><div class="grid2" id="fRates"></div></div>
-  <div class="card"><h3>كود الخصم</h3><div class="grid2" id="fCode"></div></div>
-  <div class="card"><h3>حسابات ديسكورد: السنة وسعر الواحد والاتنين وسعر التوريد 3 فأكتر</h3><div id="fAcc"></div><p class="row"><button class="ghost" id="addYear">إضافة سنة</button></p></div>
-  <p class="row"><button id="savePrices">حفظ الأسعار</button><span id="pmsg" class="muted"></span></p>
-</section>
-<section id="tab-news">
-  <div class="card"><div class="grid2">
-    <label>Title (English)<input id="te" type="text"></label>
-    <label>العنوان (عربي)<input id="ta" type="text"></label>
-    <label>Body (English)<textarea id="be" rows="3"></textarea></label>
-    <label>المحتوى (عربي)<textarea id="ba" rows="3"></textarea></label>
-  </div><p class="row"><button id="addNews">نشر الخبر</button><span id="nmsg" class="muted"></span></p></div>
-  <div id="news"></div>
-</section>
+  </section>
+
+  <section id="tab-orders">
+    <input id="osearch" class="search" placeholder="بحث بالإيميل أو رقم الطلب" style="margin-bottom:10px">
+    <div id="orders"></div>
+  </section>
+
+  <section id="tab-prices">
+    <div class="card"><h3>الباقات (بالدولار)</h3><div class="grid2" id="fBase"></div></div>
+    <div class="card"><h3>الرومات والرولات والبوتات (بالدولار للوحدة)</h3><div class="grid2" id="fUnits"></div></div>
+    <div class="card"><h3>أسعار العملات (بالدولار لكل عملة)</h3><div class="grid2" id="fRates"></div></div>
+    <div class="card"><h3>كود الخصم</h3><div class="grid2" id="fCode"></div></div>
+    <div class="card"><h3>حسابات ديسكورد</h3><p class="muted">السنة، وسعر الواحد والاتنين، وسعر التوريد من 3 حسابات فأكتر. علّم <b>OUT OF STOCK</b> على السنة اللي خلصت، وبعدين احفظ الأسعار، والسنة دي هتتقفل على الموقع فورا.</p><div id="fAcc"></div><p class="row"><button class="btn ghost" id="addYear">إضافة سنة</button></p></div>
+    <p class="row"><button class="btn dark" id="savePrices">حفظ الأسعار</button><span id="pmsg" class="muted"></span></p>
+  </section>
+
+  <section id="tab-links">
+    <div class="card">
+      <h3>روابط الديسكورد</h3>
+      <p class="muted">الزراير دي بتظهر على الموقع في قسم الدعم. أول ما تحفظ الرابط بيظهر على الموقع.</p>
+      <div class="grid2">
+        <label>رابط سيرفر الديسكورد (الدعوة)<input id="lServer" type="url" placeholder="https://discord.gg/..." dir="ltr"></label>
+        <label>رابط بروفايلك على ديسكورد<input id="lProfile" type="url" dir="ltr"></label>
+      </div>
+      <p class="row"><button class="btn dark" id="saveLinks">حفظ الروابط</button><span id="lmsg" class="muted"></span></p>
+    </div>
+  </section>
+
+  <section id="tab-news">
+    <div class="card"><div class="grid2">
+      <label>Title (English)<input id="te" type="text"></label>
+      <label>العنوان (عربي)<input id="ta" type="text"></label>
+      <label>Body (English)<textarea id="be" rows="3"></textarea></label>
+      <label>المحتوى (عربي)<textarea id="ba" rows="3"></textarea></label>
+    </div><p class="row"><button class="btn dark" id="addNews">نشر الخبر</button><span id="nmsg" class="muted"></span></p></div>
+    <div id="news"></div>
+  </section>
 </main>
+
 <script>
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[c]);
-let KEY=sessionStorage.getItem("joe_admin_key")||"", CUR=null, FILTER="open", TICKETS=[], ORDERS=[], PENDING_IMGS=[];
-document.addEventListener("change",async e=>{
-  if(e.target.id!=="replyImg")return;
-  const files=[...e.target.files].slice(0,3);
-  PENDING_IMGS=await Promise.all(files.map(f=>new Promise(res=>{const r=new FileReader();r.onload=()=>res({name:f.name,data:r.result});r.readAsDataURL(f)})));
-  say(PENDING_IMGS.length+" صورة جاهزة للإرسال");
-});
-$("#tsearch").oninput=()=>loadTickets();
-$("#osearch").oninput=()=>renderOrders();
-$("#key").value=KEY;
+let KEY=sessionStorage.getItem("joe_admin_key")||"";
+let FILTER="open", LIST=[], CUR=null, TICKET=null, PENDING=[], DRAFTS={}, TIMER=null, ORDERS=[];
+let LAST={head:"",ord:"",chat:""};
+
+// The customer's own texts, so the owner's view of a ticket matches what the customer sees.
+const D={
+en:{chatHello:"Hi, thanks for opening ticket {id}. Here is your order summary.",chatPickCoin:"Pick the coin you want to pay with, then send the exact amount.",chatProofBot:"Thanks. We are checking your transfer screenshot and will confirm here.",chatConfirmed:"Payment confirmed. Your order is in the queue.",chatDone:"Your server is ready. Thanks for ordering with joe.",chatSupFollow:"Anything else? Write it below and we will reply here.",invSent:"Invoice sent to",paid:"I have paid",amtLabel:"Amount to send",netLabel:"Network",warnTitle:"Important",warnText:"Send only to this address and only on the {net} network. If you send to another address or another network, we are not responsible and the funds cannot be recovered.",
+pkg_community:"Community server",pkg_shop:"Shop package",pkg_store:"Store package",pkg_upgrade:"Upgrade a server",pkg_other:"Other servers",pkg_account:"Discord accounts",
+accYearLbl:"Year created",accQtyLbl:"How many accounts",rooms:"Rooms",roles:"Roles",bots:"Bots",discount:"Discount",total:"Total",
+invoiceTitle:"Invoice",invDate:"Date",invBill:"Billed to",invPkg:"Package",invExtras:"Rooms / roles / bots",invSub:"Subtotal",invDisc:"Discount (joehere)",invTotal:"Total paid",invPay:"Paid with",invStatus:"Status",invPaid:"Paid",contentLine:"{r} rooms, {ro} roles and {b} bots are ready in your server.",accDone:"{q} accounts from {y} delivered.",
+a_pay:"Pay the exact USD total in the coin you picked, then press “I have paid”.",a_del:"Your server is delivered once the payment is confirmed.",a_price:"Your total is the package price plus the rooms, roles and bots you chose. You see it before you pay.",a_other:"Write your question below and we will reply in this ticket.",
+r_pay:"Payment",r_del:"Server delivery",r_price:"Pricing",r_other:"Something else"},
+ar:{chatHello:"أهلا، شكرا إنك فتحت التكت {id}. ده ملخص طلبك.",chatPickCoin:"اختار العملة اللي هتدفع بيها، وبعدين ابعت المبلغ بالظبط.",chatProofBot:"شكرا، بنراجع صورة التحويل وهنأكد هنا.",chatConfirmed:"الدفع اتأكد. الأوردر دخل الطابور.",chatDone:"السيرفر جاهز. شكرا إنك طلبت من joe.",chatSupFollow:"في حاجة تانية؟ اكتبها تحت وهنرد هنا.",invSent:"الفاتورة اتبعتت على",paid:"دفعت",amtLabel:"المبلغ اللي تبعته",netLabel:"الشبكة",warnTitle:"مهم جدا",warnText:"ابعت على العنوان ده وعلى شبكة {net} بس. لو بعت على عنوان تاني أو شبكة تانية، إحنا مش مسؤولين، والفلوس مش هنقدر نسترجعها.",
+pkg_community:"سيرفر كومينيتي",pkg_shop:"باقة الشوب",pkg_store:"باقة الاستور",pkg_upgrade:"تطوير سيرفر",pkg_other:"سيرفرات أخرى",pkg_account:"حسابات ديسكورد",
+accYearLbl:"سنة الإنشاء",accQtyLbl:"عدد الحسابات",rooms:"الرومات",roles:"الرولات",bots:"البوتات",discount:"الخصم",total:"الإجمالي",
+invoiceTitle:"فاتورة",invDate:"التاريخ",invBill:"الفاتورة لـ",invPkg:"الباقة",invExtras:"رومات / رولات / بوتات",invSub:"المجموع",invDisc:"الخصم (joehere)",invTotal:"الإجمالي المدفوع",invPay:"اتدفع بـ",invStatus:"الحالة",invPaid:"مدفوع",contentLine:"{r} روم و{ro} رول و{b} بوت جاهزين في سيرفرك.",accDone:"اتسلم {q} حساب من سنة {y}.",
+a_pay:"ادفع الإجمالي بالدولار بالظبط بالعملة اللي اخترتها، وبعدين اضغط “دفعت”.",a_del:"السيرفر بيتسلم بعد تأكيد الدفع.",a_price:"الإجمالي = سعر الباقة + الرومات والرولات والبوتات اللي اخترتها. هتشوفه قبل ما تدفع.",a_other:"اكتب سؤالك تحت وهنرد عليك في التكت.",
+r_pay:"الدفع",r_del:"تسليم السيرفر",r_price:"الأسعار",r_other:"حاجة تانية"}
+};
+const T=(lang,k)=>((D[lang]&&D[lang][k])||D.en[k]||k);
+const ORDER_STATUS={awaiting:"في انتظار الدفع",review:"مراجعة التحويل",paid:"مدفوع",cancelled:"ملغي",refunded:"مسترد"};
+const reasonOf=t=>t.type==="purchase"?T("ar","pkg_"+t.reason):T("ar","r_"+t.reason);
+const ago=iso=>{const s=(Date.now()-Date.parse(iso))/1000;if(!(s>=0))return"";if(s<60)return"الآن";if(s<3600)return Math.floor(s/60)+" د";if(s<86400)return Math.floor(s/3600)+" س";return Math.floor(s/86400)+" ي"};
+const row=(k,v)=>`<div class="rowk"><span>${k}</span><b>${esc(v)}</b></div>`;
 const say=text=>{$("#msg").textContent=text};
-async function call(path,opt){
-  opt=opt||{};
+
+async function call(path,opt={}){
   const r=await fetch(path,{method:opt.method||"GET",headers:{"Content-Type":"application/json","x-admin-key":KEY},body:opt.body});
   const j=await r.json().catch(()=>({}));
   if(!r.ok) throw new Error(j.error||("Error "+r.status));
@@ -93,9 +208,10 @@ async function call(path,opt){
 }
 function showTab(tab){
   if(!KEY) return say("ادخل كلمة سر الأدمن الأول");
-  if(tab==="tickets") loadTickets();
+  if(tab==="tickets") loadList();
   if(tab==="orders") loadOrders();
   if(tab==="prices") loadPrices();
+  if(tab==="links") loadLinks();
   if(tab==="news") loadNews();
 }
 $$("nav button").forEach(b=>b.onclick=()=>{
@@ -104,79 +220,283 @@ $$("nav button").forEach(b=>b.onclick=()=>{
   showTab(b.dataset.tab);
 });
 $("#open").onclick=()=>{KEY=$("#key").value.trim();sessionStorage.setItem("joe_admin_key",KEY);say("");showTab("tickets")};
-$("#filterOpen").onclick=()=>{FILTER="open";loadTickets()};
-$("#filterAll").onclick=()=>{FILTER="all";loadTickets()};
+
+// ---------- tickets: list
+async function loadList(){
+  try{LIST=await call("/api/admin/tickets")}catch(e){return say(e.message)}
+  renderList();
+}
+function renderList(){
+  const q=$("#tsearch").value.trim().toLowerCase();
+  const n={open:0,closed:0,all:LIST.length};
+  LIST.forEach(t=>{if(t.status==="open")n.open++;else n.closed++});
+  $$("#seg button").forEach(b=>{b.classList.toggle("on",b.dataset.filter===FILTER);b.querySelector("i").textContent=n[b.dataset.filter]});
+  const rows=LIST.filter(t=>(FILTER==="all"||t.status===FILTER)&&(!q||(t.email+" "+reasonOf(t)+" "+t.id).toLowerCase().includes(q)));
+  $("#tlist").innerHTML=rows.map(cardHTML).join("")||`<div class="empty">مفيش تكتات هنا</div>`;
+}
+function cardHTML(t){
+  const L=t.last, open=t.status==="open";
+  const who=L?(L.sender==="joe"?"joe: ":"العميل: "):"";
+  const prev=L?(L.text?esc(L.text.slice(0,70)):"📷 صورة"):"مفيش رسايل لسه";
+  const stars=t.rating?` <span class="gold">${"★".repeat(t.rating)}</span>`:"";
+  return `<button class="tcard${CUR===t.id?" on":""}" data-id="${esc(t.id)}">
+    <span class="tc-top"><span class="kind ${t.type==="support"?"support":""}">${t.type==="purchase"?"شراء":"دعم"}</span><b>${esc(reasonOf(t))}</b>${stars}<small>${ago(L?L.at:t.updated_at)}</small></span>
+    <span class="tc-mail">${esc(t.email)}</span>
+    <span class="tc-prev">${who}${prev}</span>
+    <span class="row"><span class="pill ${open?"ok":""}">${open?"مفتوح":"مقفول"}</span></span></button>`;
+}
+$("#seg").onclick=e=>{const b=e.target.closest("[data-filter]");if(!b)return;FILTER=b.dataset.filter;renderList()};
+$("#tsearch").oninput=renderList;
 $("#tlist").onclick=e=>{const b=e.target.closest("[data-id]");if(b)openTicket(b.dataset.id)};
 
-// ---------- tickets
-async function loadTickets(){
-  try{TICKETS=await call("/api/admin/tickets");}catch(e){return say(e.message)}
-  const q=($("#tsearch").value||"").trim().toLowerCase();
-  const list=TICKETS.filter(t=>(FILTER==="all"||t.status==="open")&&(!q||(t.email+" "+(t.reason||"")+" "+t.id).toLowerCase().includes(q)));
-  $("#tlist").innerHTML=list.map(t=>`<button class="item ${CUR===t.id?"on":""}" data-id="${esc(t.id)}"><b>${t.type==="purchase"?"شراء":"دعم"}</b> · ${esc(t.reason||"")}<br><span class="muted">${esc(t.email)}</span> <span class="tag">${t.status==="open"?"مفتوح":"مقفول"}</span></button>`).join("")||'<p class="muted">مفيش تكتات.</p>';
-}
+// ---------- tickets: one ticket
 function openTicket(id){
-  CUR=id;loadTickets();refreshOrders().then(loadTicket);
-  clearInterval(window.POLL);window.POLL=setInterval(()=>{if(CUR===id)loadTicket()},3000);
+  if(CUR&&$("#reply")) DRAFTS[CUR]=$("#reply").value;
+  CUR=id; TICKET=null; LAST={head:"",ord:"",chat:""}; PENDING=[];
+  showShell(); renderList();
+  loadTicket(false);
+  clearInterval(TIMER); TIMER=setInterval(()=>loadTicket(true),3000);
 }
-async function refreshOrders(){try{ORDERS=await call("/api/admin/orders")}catch(e){}}
-async function loadTicket(){
-  if(!CUR) return;
+function emptyView(){
+  CUR=null; TICKET=null; LAST={head:"",ord:"",chat:""};
+  $("#tview").innerHTML=`<div class="empty big">اختار تكت من القايمة</div>`;
+}
+// The reply box is built once per ticket; the polling only refreshes the parts above it,
+// so what is typed in the box stays put.
+function showShell(){
+  $("#tview").innerHTML=`<div id="vhead"></div><div id="ordbar"></div>
+    <div class="chatbox"><div id="chat" class="chat"></div></div>
+    <div class="composer">
+      <div id="staged" class="staged"></div>
+      <textarea id="reply" rows="2" placeholder="اكتب الرد للعميل"></textarea>
+      <div class="crow"><label class="btn ghost sm">📎 صور<input type="file" id="replyImg" accept="image/*" multiple></label><span class="grow"></span><button class="btn dark" id="sendReply">إرسال الرد</button></div>
+    </div>`;
+  const ta=$("#reply");
+  ta.value=DRAFTS[CUR]||"";
+  ta.oninput=()=>{DRAFTS[CUR]=ta.value};
+  ta.onkeydown=e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendReply()}};
+  $("#replyImg").onchange=addFiles;
+  $("#sendReply").onclick=sendReply;
+  $("#staged").onclick=e=>{const b=e.target.closest("[data-unstage]");if(b){PENDING.splice(+b.dataset.unstage,1);renderStaged()}};
+  renderStaged();
+}
+async function loadTicket(silent,forceScroll){
+  const id=CUR; if(!id) return;
   let t;
-  try{
-    t=await call("/api/admin/tickets?id="+CUR);
-  }catch(e){return say(e.message)}
-  const draft=$("#reply")?$("#reply").value:"";
-  const order=t.type==="purchase"?ORDERS.find(o=>o.id===t.order_id):null;
-  const open=t.status==="open";
-  const orderBox=order?`<div class="card"><div class="row"><b>${esc(order.ref)}</b><span class="tag">${esc(order.status)}</span><span>$${Number(order.usd).toFixed(2)}</span><span>${esc(order.pay.amount)} ${esc(order.pay.coin)} · ${esc(order.pay.net)}</span></div>
-    <p class="mono">${esc(order.pay.addr)}</p>${order.proof?`<img class="proof" src="${esc(order.proof.data)}" alt="">`:'<p class="muted">لا توجد صورة تحويل بعد.</p>'}
-    ${order.status==="paid"?'<p class="muted">تم تأكيد الدفع ✓</p>':`<button data-confirm="${esc(order.id)}">تأكيد الدفع</button>`}</div>`:"";
-  $("#tview").innerHTML=`<div class="card"><div class="row">
-      <b>${t.type==="purchase"?"تكت شراء":"تكت دعم"}</b><span class="tag">${esc(t.email)}</span><span class="tag">${open?"مفتوح":"مقفول"}</span>
-      <button class="ghost" data-toggle="${open?"closed":"open"}">${open?"قفل التكت":"فتح التكت"}</button></div></div>`+orderBox+
-    `<div class="card"><div class="msgs" id="mlist">${t.messages.map(m=>`<div class="msg ${m.sender==="joe"?"mine":""}">${esc(m.text||"")}${(m.files||[]).map(f=>`<img src="${esc(f.data)}" alt="">`).join("")}<small>${m.sender==="joe"?"joe":"العميل"} · ${new Date(m.created_at).toLocaleString()}</small></div>`).join("")||'<p class="muted">مفيش رسايل لسه.</p>'}</div>
-     <div style="margin-top:10px"><textarea id="reply" rows="3" placeholder="اكتب الرد للعميل">${esc(draft)}</textarea>
-     <p class="row"><input type="file" id="replyImg" accept="image/*" multiple><button id="sendReply">إرسال الرد</button></p></div></div>`;
-  $("#mlist").scrollTop=$("#mlist").scrollHeight;
+  try{t=await call("/api/admin/tickets?id="+encodeURIComponent(id))}
+  catch(e){if(!silent)say(e.message);return}
+  if(id!==CUR||!$("#chat")) return;
+  TICKET=t;
+  paintHead(); paintOrder(); paintChat(silent&&!forceScroll);
 }
-document.addEventListener("click",async e=>{
-  const b=e.target.closest("button");if(!b)return;
+function paintHead(){
+  const t=TICKET, open=t.status==="open";
+  const rating=t.rating
+    ?`<span class="rated"><span class="gold">${"★".repeat(t.rating)}<span class="dim">${"★".repeat(5-t.rating)}</span></span>${t.rating_note?`<q>${esc(t.rating_note)}</q>`:""}</span>`
+    :(open?"":`<span class="pill warn">بانتظار تقييم العميل</span>`);
+  const html=`<div class="vhead">
+    <div class="vtop">
+      <div class="vtitle"><span class="kind ${t.type==="support"?"support":""}">${t.type==="purchase"?"شراء":"دعم"}</span><h2>${esc(reasonOf(t))}</h2></div>
+      <span class="pill ${open?"ok":""}">${open?"مفتوح":"مقفول"}</span>
+    </div>
+    <div class="vmeta"><button class="link" data-act="copy" title="انسخ الإيميل">${esc(t.email)}</button><span class="mono">${esc(String(t.id).slice(0,8))}</span><span>${new Date(t.created_at).toLocaleString("ar-EG")}</span></div>
+    <div class="vactions">${rating}<span class="grow"></span>
+      <button class="btn ${open?"ghost":"dark"} sm" data-act="toggle">${open?"قفل التكت":"فتح التكت"}</button>
+      <button class="btn danger sm" data-act="delete">حذف نهائي</button>
+    </div></div>`;
+  if(html!==LAST.head){$("#vhead").innerHTML=html;LAST.head=html}
+}
+function paintOrder(){
+  const o=TICKET.order, el=$("#ordbar");
+  let html="";
+  if(o){
+    const paid=o.status==="paid", dead=o.status==="cancelled"||o.status==="refunded";
+    const proof=o.proof?`<a class="proofthumb" href="${esc(o.proof.data)}" target="_blank" rel="noopener"><img src="${esc(o.proof.data)}" alt=""><span>صورة التحويل</span></a>`:`<span class="muted">لسه مفيش صورة تحويل</span>`;
+    const confirmBtn=paid?`<span class="pill ok">اتأكد الدفع ✓</span>`:(dead?"":`<button class="btn dark sm" data-act="confirm" data-oid="${esc(o.id)}">تأكيد الدفع</button>`);
+    const other=paid?`<button class="btn ghost sm" data-act="refund" data-oid="${esc(o.id)}">استرجاع</button>`:(dead?"":`<button class="btn ghost sm" data-act="cancel" data-oid="${esc(o.id)}">إلغاء الطلب</button>`);
+    html=`<div class="ordcard">
+      <div class="orow"><b class="mono">${esc(o.ref)}</b><span class="pill">${ORDER_STATUS[o.status]||esc(o.status)}</span><b class="amt">$${Number(o.usd).toFixed(2)}</b><span class="muted">${esc(o.pay.amount)} ${esc(o.pay.coin)} · ${esc(o.pay.net)}</span></div>
+      <div class="mono">${esc(o.pay.addr)}</div>
+      <div class="orow">${proof}<span class="grow"></span>${confirmBtn}${other}</div></div>`;
+  }
+  if(html!==LAST.ord){el.innerHTML=html;LAST.ord=html}
+}
+// The customer's chat, rebuilt from the order and the messages in the same order the customer saw it
+function timeline(t){
+  const lang=t.lang==="ar"?"ar":"en", o=t.order, base=Date.parse(t.created_at)||Date.now();
+  const items=[];
+  if(t.type==="purchase"&&o){
+    if(o.notes&&o.pkg!=="account") items.push({f:"me",text:o.notes,at:base-3});
+    items.push({f:"joe",text:T(lang,"chatHello").replace("{id}",o.ref),at:base});
+    items.push({f:"joe",kind:"sum",order:o,at:base+1});
+    items.push({f:"joe",text:T(lang,"chatPickCoin"),at:base+2});
+    items.push({f:"joe",kind:"pay",order:o,full:o.status==="awaiting",at:base+3});
+    if(o.proof){
+      const pa=o.proof.at?Date.parse(o.proof.at):base+4;
+      items.push({f:"me",text:T(lang,"paid"),files:[{data:o.proof.data}],at:pa});
+      items.push({f:"joe",text:T(lang,"chatProofBot"),at:pa+1});
+    }
+  }else if(t.type==="support"){
+    items.push({f:"joe",text:T(lang,"a_"+t.reason),at:base});
+    items.push({f:"joe",text:T(lang,"chatSupFollow"),at:base+1});
+  }
+  for(const m of t.messages||[]) items.push({f:m.sender==="me"?"me":"joe",text:m.text||"",files:m.files||[],at:Date.parse(m.created_at)||base});
+  items.sort((a,b)=>a.at-b.at);
+  if(t.type==="purchase"&&o&&o.status==="paid"){
+    items.push({f:"joe",text:T(lang,"chatConfirmed")});
+    if(o.inv) items.push({f:"joe",kind:"inv",order:o});
+    items.push({f:"joe",text:T(lang,"invSent")+" "+o.email});
+    items.push({f:"joe",text:T(lang,"chatDone")});
+  }
+  return {lang,items};
+}
+function sumCard(o,lang){
+  const L2=k=>T(lang,k);
+  const parts=o.pkg==="account"
+    ?row(L2("accYearLbl"),o.c.year)+row(L2("accQtyLbl"),o.c.qty)
+    :row(L2("rooms"),o.c.rooms)+row(L2("roles"),o.c.roles)+row(L2("bots"),o.c.bots);
+  return `<div class="sumcard"><b class="serif">${L2("pkg_"+o.pkg)}</b>${parts}${o.pct?row(L2("discount"),"−$"+(o.sub-o.usd).toFixed(2)):""}${row(L2("total"),"$"+Number(o.usd).toFixed(2))}</div>`;
+}
+function payCard(o,lang){
+  const net=o.pay.net;
+  return `<div class="paybox">
+    <div class="kv"><span>${T(lang,"netLabel")}</span><b>${esc(net)}</b></div>
+    <div class="kv"><span>${T(lang,"amtLabel")}</span><b>${esc(o.pay.amount)} ${esc(o.pay.coin)}</b></div>
+    <div class="code">${esc(o.pay.addr)}</div>
+    <div class="warn"><b>${T(lang,"warnTitle")}</b><p>${esc(T(lang,"warnText").replace("{net}",net))}</p></div></div>`;
+}
+function invCard(o,lang){
+  const L2=k=>T(lang,k), v=o.inv||{};
+  const extras=o.pkg==="account"?`${o.c.year} × ${o.c.qty}`:`${o.c.rooms} / ${o.c.roles} / ${o.c.bots}`;
+  const cont=o.pkg==="account"
+    ?L2("accDone").replace("{q}",o.c.qty).replace("{y}",o.c.year)
+    :L2("contentLine").replace("{r}",o.c.rooms).replace("{ro}",o.c.roles).replace("{b}",o.c.bots);
+  return `<div class="sumcard"><b class="serif">${L2("invoiceTitle")} · ${esc(v.no||"")}</b>
+    ${row(L2("invDate"),v.date||"")}${row(L2("invBill"),v.email||o.email)}${row(L2("invPkg"),L2("pkg_"+o.pkg))}
+    ${row(L2("invExtras"),extras)}${row(L2("invSub"),"$"+Number(o.sub).toFixed(2))}
+    ${o.pct?row(L2("invDisc"),"−$"+(o.sub-o.usd).toFixed(2)):""}${row(L2("invTotal"),"$"+Number(o.usd).toFixed(2))}
+    ${row(L2("invPay"),o.pay.coin)}${row(L2("invStatus"),L2("invPaid"))}
+    <p class="cont">${esc(cont)}</p></div>`;
+}
+function bubble(it,lang){
+  const mine=it.f==="me";
+  let inner;
+  if(it.kind==="sum") inner=sumCard(it.order,lang);
+  else if(it.kind==="pay") inner=it.full?payCard(it.order,lang):`${T(lang,"amtLabel")} <b>${esc(it.order.pay.amount)} ${esc(it.order.pay.coin)}</b>`;
+  else if(it.kind==="inv") inner=invCard(it.order,lang);
+  else inner=esc(it.text||"")+(it.files||[]).map(f=>`<img src="${esc(f.data)}" alt="">`).join("");
+  return `<div class="mrow${mine?" mine":""}"><div class="bub" dir="auto">${inner}</div></div>`;
+}
+function paintChat(silent){
+  const box=$("#chat"); if(!box||!TICKET) return;
+  const near=box.scrollHeight-box.scrollTop-box.clientHeight<140;
+  const {lang,items}=timeline(TICKET);
+  const html=items.map(it=>bubble(it,lang)).join("")||`<p class="muted center">مفيش رسايل لسه</p>`;
+  if(html!==LAST.chat){box.innerHTML=html;LAST.chat=html;if(!silent||near)box.scrollTop=box.scrollHeight}
+}
+$("#tview").onclick=async e=>{
+  const b=e.target.closest("[data-act]"); if(!b||!TICKET) return;
+  const act=b.dataset.act;
   try{
-    if(b.dataset.toggle){
-      await call(`/api/admin/tickets?id=${CUR}&action=status`,{method:"POST",body:JSON.stringify({status:b.dataset.toggle})});
-      say("تم تحديث التكت");loadTicket();loadTickets();
-    }else if(b.id==="sendReply"){
-      const v=$("#reply").value.trim();if(!v&&!PENDING_IMGS.length)return;
-      await call(`/api/admin/tickets?id=${CUR}&action=reply`,{method:"POST",body:JSON.stringify({text:v,files:PENDING_IMGS})});
-      $("#reply").value="";PENDING_IMGS=[];say("اتبعت الرد");loadTicket();
-    }else if(b.dataset.status){
-      const word=b.dataset.status==="refunded"?"استرجاع المبلغ":"إلغاء الطلب";
-      if(!window.confirm(word+"؟ ده بيغيّر حالة الطلب بس، والفلوس لازم ترجعها بإيدك.")) return;
-      await call(`/api/admin/orders?id=${b.dataset.oid}&action=status`,{method:"POST",body:JSON.stringify({status:b.dataset.status})});
-      say("اتحدّث الطلب");loadOrders();
-    }else if(b.dataset.confirm){
-      await call(`/api/admin/orders/${b.dataset.confirm}/confirm`,{method:"POST",body:"{}"});
-      say("اتأكد الطلب والفاتورة اتبعتت");refreshOrders().then(loadTicket);loadOrders();
+    if(act==="copy"){await navigator.clipboard.writeText(TICKET.email);say("اتنسخ الإيميل")}
+    else if(act==="toggle"){
+      const closing=TICKET.status==="open";
+      if(closing&&!confirm("هيتقفل التكت، والعميل هيتطلب منه يقيّم قبل ما يفتح تكت جديد. متأكد؟")) return;
+      await call(`/api/admin/tickets?id=${CUR}&action=status`,{method:"POST",body:JSON.stringify({status:closing?"closed":"open"})});
+      say(closing?"اتقفل التكت":"اتفتح التكت"); await loadTicket(true); loadList();
+    }
+    else if(act==="delete"){
+      if(!confirm("هيتمسح التكت والرسايل كلها نهائيا، ومش هيرجع. متأكد؟")) return;
+      await call(`/api/admin/tickets?id=${CUR}&action=delete`,{method:"POST",body:"{}"});
+      clearInterval(TIMER); emptyView(); say("اتحذف التكت"); loadList();
+    }
+    else if(act==="confirm"){
+      await call(`/api/admin/orders/${b.dataset.oid}/confirm`,{method:"POST",body:"{}"});
+      say("اتأكد الدفع والفاتورة اتبعتت"); await loadTicket(true); loadList();
+    }
+    else if(act==="cancel"||act==="refund"){
+      const status=act==="refund"?"refunded":"cancelled";
+      const word=act==="refund"?"استرجاع المبلغ":"إلغاء الطلب";
+      if(!confirm(word+"؟ ده بيغيّر حالة الطلب بس، والفلوس لازم ترجعها بإيدك.")) return;
+      await call(`/api/admin/orders?id=${b.dataset.oid}&action=status`,{method:"POST",body:JSON.stringify({status})});
+      say("اتحدّث الطلب"); await loadTicket(true);
     }
   }catch(err){say(err.message)}
-});
+};
+
+// ---------- reply box
+function shrink(file,max=1280){
+  return new Promise(res=>{
+    const fr=new FileReader();
+    fr.onload=()=>{
+      const img=new Image();
+      img.onload=()=>{
+        const s=Math.min(1,max/Math.max(img.width,img.height));
+        const c=document.createElement("canvas");c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);
+        const ctx=c.getContext("2d");ctx.fillStyle="#fff";ctx.fillRect(0,0,c.width,c.height);ctx.drawImage(img,0,0,c.width,c.height);
+        res(c.toDataURL("image/jpeg",0.82));
+      };
+      img.onerror=()=>res(fr.result);
+      img.src=fr.result;
+    };
+    fr.readAsDataURL(file);
+  });
+}
+async function addFiles(e){
+  const left=Math.max(0,3-PENDING.length);
+  const files=[...e.target.files].filter(f=>f.type.startsWith("image/")).slice(0,left);
+  for(const f of files) PENDING.push({name:f.name,data:await shrink(f)});
+  e.target.value="";
+  renderStaged();
+}
+function renderStaged(){
+  const el=$("#staged"); if(!el) return;
+  el.innerHTML=PENDING.map((f,i)=>`<span class="chipimg"><img src="${f.data}" alt="">${esc(f.name)}<button data-unstage="${i}">×</button></span>`).join("");
+}
+async function sendReply(){
+  if(!CUR||!TICKET) return;
+  const ta=$("#reply"), v=ta.value.trim();
+  if(!v&&!PENDING.length) return;
+  if(TICKET.status==="closed") return say("التكت مقفول. افتحه الأول عشان ترد.");
+  const btn=$("#sendReply"); btn.disabled=true;
+  try{
+    await call(`/api/admin/tickets?id=${CUR}&action=reply`,{method:"POST",body:JSON.stringify({text:v,files:PENDING})});
+    ta.value=""; DRAFTS[CUR]=""; PENDING=[]; renderStaged();
+    await loadTicket(true,true); loadList();
+  }catch(e){say(e.message)}
+  finally{btn.disabled=false}
+}
 
 // ---------- orders
 async function loadOrders(){
-  try{ORDERS=await call("/api/admin/orders");}catch(e){return say(e.message)}
+  try{ORDERS=await call("/api/admin/orders")}catch(e){return say(e.message)}
   renderOrders();
 }
 function renderOrders(){
   const q=($("#osearch").value||"").trim().toLowerCase();
   const list=ORDERS.filter(o=>!q||(o.email+" "+o.ref+" "+o.status).toLowerCase().includes(q));
-  $("#orders").innerHTML=list.map(o=>`<div class="card"><div class="row"><b>${esc(o.ref)}</b><span class="tag">${esc(o.status)}</span><span>${esc(o.email)}</span><span>${esc(o.pkg)} · $${Number(o.usd).toFixed(2)}</span></div>
+  $("#orders").innerHTML=list.map(o=>`<div class="card"><div class="orow"><b class="mono">${esc(o.ref)}</b><span class="pill">${ORDER_STATUS[o.status]||esc(o.status)}</span><span>${esc(o.email)}</span><span class="muted">${esc(o.pkg)} · $${Number(o.usd).toFixed(2)}</span></div>
     <p>${esc(o.pay.amount)} ${esc(o.pay.coin)} · ${esc(o.pay.net)}</p><p class="mono">${esc(o.pay.addr)}</p>
-    ${o.proof?`<img class="proof" src="${esc(o.proof.data)}" alt="">`:'<p class="muted">لا توجد صورة تحويل.</p>'}
-    ${o.status==="paid"?'<p class="muted">تم التأكيد ✓</p>':`<button data-confirm="${esc(o.id)}">تأكيد الدفع</button>`}
-    ${o.status==="paid"?`<button class="ghost" data-oid="${esc(o.id)}" data-status="refunded">استرجاع</button>`:(o.status==="cancelled"||o.status==="refunded"?"":`<button class="ghost" data-oid="${esc(o.id)}" data-status="cancelled">إلغاء الطلب</button>`)}
-    </div>`).join("")||'<p class="muted">مفيش طلبات.</p>';
+    ${o.proof?`<a class="proofthumb" href="${esc(o.proof.data)}" target="_blank" rel="noopener"><img src="${esc(o.proof.data)}" alt=""><span>صورة التحويل</span></a>`:'<p class="muted">لا توجد صورة تحويل.</p>'}
+    <div class="orow" style="margin-top:8px">${o.status==="paid"?'<span class="pill ok">تم التأكيد ✓</span>':`<button class="btn dark sm" data-oconfirm="${esc(o.id)}">تأكيد الدفع</button>`}
+    ${o.status==="paid"?`<button class="btn ghost sm" data-oid="${esc(o.id)}" data-ostatus="refunded">استرجاع</button>`:(o.status==="cancelled"||o.status==="refunded"?"":`<button class="btn ghost sm" data-oid="${esc(o.id)}" data-ostatus="cancelled">إلغاء الطلب</button>`)}</div></div>`).join("")||'<p class="muted">مفيش طلبات.</p>';
 }
+$("#osearch").oninput=renderOrders;
+$("#orders").onclick=async e=>{
+  const b=e.target.closest("[data-oconfirm],[data-ostatus]"); if(!b) return;
+  try{
+    if(b.dataset.oconfirm){
+      await call(`/api/admin/orders/${b.dataset.oconfirm}/confirm`,{method:"POST",body:"{}"});
+      say("اتأكد الطلب والفاتورة اتبعتت");
+    }else{
+      const s=b.dataset.ostatus, word=s==="refunded"?"استرجاع المبلغ":"إلغاء الطلب";
+      if(!confirm(word+"؟ ده بيغيّر حالة الطلب بس، والفلوس لازم ترجعها بإيدك.")) return;
+      await call(`/api/admin/orders?id=${b.dataset.oid}&action=status`,{method:"POST",body:JSON.stringify({status:s})});
+      say("اتحدّث الطلب");
+    }
+    loadOrders();
+  }catch(err){say(err.message)}
+};
 
 // ---------- prices and codes
 const BASE_KEYS=[["community","سيرفر كومينيتي"],["shop","باقة الشوب"],["store","باقة الاستور"],["upgrade","تطوير سيرفر"],["other","سيرفرات أخرى"]];
@@ -184,7 +504,7 @@ const UNIT_KEYS=[["rooms","الروم"],["roles","الرول"],["bots","البو
 const RATE_KEYS=[["BTC","BTC"],["ETH","ETH"],["USDT","USDT (BEP20)"],["SOL","SOL"],["LTC","LTC"]];
 async function loadPrices(){
   let P;
-  try{P=await fetch("/api/settings").then(r=>r.json());}catch(e){return say("تعذر تحميل الأسعار")}
+  try{P=await fetch("/api/settings").then(r=>r.json())}catch(e){return say("تعذر تحميل الأسعار")}
   renderAcc(P.accounts||[]);
   const field=(name,label,val,step)=>`<label>${label}<input type="number" step="${step}" min="0" data-g="${name}" value="${val}"></label>`;
   $("#fBase").innerHTML=BASE_KEYS.map(([k,l])=>field("base."+k,l,P.base[k],"0.01")).join("");
@@ -192,10 +512,14 @@ async function loadPrices(){
   $("#fRates").innerHTML=RATE_KEYS.map(([k,l])=>field("rates."+k,l,P.rates[k],"any")).join("");
   $("#fCode").innerHTML=`<label>الكود<input type="text" data-g="code.word" value="${esc(P.code.word)}"></label>`+field("code.percent","نسبة الخصم %",P.code.percent,"1");
 }
-function accRow(r){return `<div class="accrow grid2" style="margin-bottom:8px"><label>السنة<input type="text" data-f="y" value="${esc(r.y)}"></label><label>سعر الواحد والاتنين ($)<input type="number" step="0.01" min="0" data-f="single" value="${r.single}"></label><label>سعر التوريد 3+ ($)<input type="number" step="0.01" min="0" data-f="bulk" value="${r.bulk}"></label><p><button class="ghost" data-accdel>حذف</button></p></div>`}
+function accRow(r){return `<div class="accrow grid2${r.out?" is-out":""}"><label>السنة<input type="text" data-f="y" value="${esc(r.y)}"></label><label>سعر الواحد والاتنين ($)<input type="number" step="0.01" min="0" data-f="single" value="${r.single}"></label><label>سعر التوريد 3+ ($)<input type="number" step="0.01" min="0" data-f="bulk" value="${r.bulk}"></label><div class="oosbox"><label class="oos-toggle"><input type="checkbox" data-f="out" ${r.out?"checked":""}><span>OUT OF STOCK</span></label><button class="btn ghost sm" data-accdel>حذف</button></div></div>`}
 function renderAcc(list){$("#fAcc").innerHTML=list.map(accRow).join("")}
-function accRows(){return [...document.querySelectorAll(".accrow")].map(r=>({y:r.querySelector('[data-f="y"]').value.trim(),single:Number(r.querySelector('[data-f="single"]').value),bulk:Number(r.querySelector('[data-f="bulk"]').value)}))}
-document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;if(b.dataset.accdel!==undefined){b.closest(".accrow").remove();return}if(b.id==="addYear")$("#fAcc").insertAdjacentHTML("beforeend",accRow({y:"",single:0,bulk:0}))});
+function accRows(){return [...document.querySelectorAll(".accrow")].map(r=>({y:r.querySelector('[data-f="y"]').value.trim(),single:Number(r.querySelector('[data-f="single"]').value),bulk:Number(r.querySelector('[data-f="bulk"]').value),out:!!r.querySelector('[data-f="out"]').checked}))}
+document.addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.accdel!==undefined){b.closest(".accrow").remove();return}
+  if(b.id==="addYear") $("#fAcc").insertAdjacentHTML("beforeend",accRow({y:"",single:0,bulk:0}));
+});
 $("#savePrices").onclick=async()=>{
   const body={base:{},units:{},rates:{},code:{}};
   $$("[data-g]").forEach(i=>{const [g,k]=i.dataset.g.split(".");body[g][k]=i.type==="number"?Number(i.value):i.value});
@@ -206,10 +530,24 @@ $("#savePrices").onclick=async()=>{
   }catch(e){$("#pmsg").textContent=e.message}
 };
 
+// ---------- links (the owner profile and the server invite shown on the site)
+async function loadLinks(){
+  const P=await fetch("/api/settings").then(r=>r.json()).catch(()=>({}));
+  const L=P.links||{};
+  $("#lServer").value=L.server||"";
+  $("#lProfile").value=L.profile||"";
+}
+$("#saveLinks").onclick=async()=>{
+  try{
+    const r=await call("/api/admin/settings",{method:"POST",body:JSON.stringify({links:{server:$("#lServer").value.trim(),profile:$("#lProfile").value.trim()}})});
+    $("#lmsg").textContent=r.links.server?"اتحفظ ✓ زرار السيرفر ظاهر على الموقع":"اتحفظ ✓ مفيش رابط سيرفر، فالزرار مخفي";
+  }catch(e){$("#lmsg").textContent=e.message}
+};
+
 // ---------- news
 async function loadNews(){
   const list=await fetch("/api/news").then(r=>r.json()).catch(()=>[]);
-  $("#news").innerHTML=list.map(n=>`<div class="card"><span class="tag">${esc(n.date)}</span><h3>${esc(n.title.en)} · ${esc(n.title.ar)}</h3><p>${esc(n.body.en)}</p><p>${esc(n.body.ar)}</p></div>`).join("");
+  $("#news").innerHTML=list.map(n=>`<div class="card"><span class="pill">${esc(n.date)}</span><h3>${esc(n.title.en)} · ${esc(n.title.ar)}</h3><p>${esc(n.body.en)}</p><p>${esc(n.body.ar)}</p></div>`).join("");
 }
 $("#addNews").onclick=async()=>{
   try{
@@ -218,6 +556,8 @@ $("#addNews").onclick=async()=>{
   }catch(e){$("#nmsg").textContent=e.message}
 };
 
-if(KEY) loadTickets();
-setInterval(()=>{if(KEY&&$("#tab-tickets").classList.contains("on"))loadTickets()},20000);
+// ---------- start
+$("#key").value=KEY;
+if(KEY) loadList();
+setInterval(()=>{if(KEY&&$("#tab-tickets").classList.contains("on"))loadList()},10000);
 </script></body></html>
