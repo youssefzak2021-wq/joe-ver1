@@ -180,6 +180,7 @@ input[type=number],input[type=text],input[type=password],input[type=url]{padding
         <label>رابط بروفايلك على ديسكورد<input id="lProfile" type="url" dir="ltr"></label>
       </div>
       <p class="row"><button class="btn dark" id="saveLinks">حفظ الروابط</button><span id="lmsg" class="muted"></span></p>
+      <p class="row"><button class="btn ghost" id="testDiscord">🔔 جرّب الإشعار على الديسكورد</button><span id="dmsg" class="muted"></span></p>
     </div>
   </section>
 
@@ -592,6 +593,12 @@ $("#saveLinks").onclick=async()=>{
     if((now.server||"")!==want.server) return $("#lmsg").textContent="الحفظ ما اتسجلش. اتأكد إن ملف api/admin/settings.js اترفع على GitHub، وإن Vercel عمل Deploy جديد.";
     $("#lmsg").textContent=want.server?"اتحفظ ✓ زرار السيرفر ظاهر على الموقع":"اتحفظ ✓ مفيش رابط سيرفر، فالزرار مخفي";
   }catch(e){$("#lmsg").textContent=e.message}
+};
+
+$("#testDiscord").onclick=async()=>{
+  const out=$("#dmsg"); out.textContent="جاري الاختبار...";
+  try{ const r=await call("/api/admin/discord-test",{method:"POST",body:"{}"}); out.textContent=(r.sent?"✓ ":"✗ ")+r.note }
+  catch(e){ out.textContent=e.message }
 };
 
 // ---------- news
