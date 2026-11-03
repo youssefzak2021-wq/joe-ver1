@@ -199,6 +199,8 @@ input[type=number],input[type=text],input[type=password],input[type=url]{padding
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[c]);
 let KEY=sessionStorage.getItem("joe_admin_key")||"";
+// a link from the Discord message opens the panel on that ticket: /admin?ticket=ID
+const WANT=new URLSearchParams(location.search).get("ticket");
 let FILTER="open", LIST=[], CUR=null, TICKET=null, PENDING=[], DRAFTS={}, TIMER=null, ORDERS=[];
 let LAST={head:"",ord:"",chat:""};
 
@@ -243,7 +245,7 @@ $$("nav button").forEach(b=>b.onclick=()=>{
   $$("section").forEach(s=>s.classList.toggle("on",s.id==="tab-"+b.dataset.tab));
   showTab(b.dataset.tab);
 });
-$("#open").onclick=()=>{KEY=$("#key").value.trim();sessionStorage.setItem("joe_admin_key",KEY);say("");showTab("tickets")};
+$("#open").onclick=()=>{KEY=$("#key").value.trim();sessionStorage.setItem("joe_admin_key",KEY);say("");if(WANT)FILTER="all";showTab("tickets");if(WANT)openTicket(WANT)};
 
 // ---------- tickets: list
 async function loadList(){
@@ -615,6 +617,7 @@ $("#addNews").onclick=async()=>{
 
 // ---------- start
 $("#key").value=KEY;
-if(KEY) loadList();
+if(WANT) FILTER="all";
+if(KEY){ loadList(); if(WANT) openTicket(WANT); }
 setInterval(()=>{if(KEY&&$("#tab-tickets").classList.contains("on"))loadList()},10000);
 </script></body></html>
